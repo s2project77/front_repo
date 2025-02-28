@@ -6,42 +6,36 @@ import Link from 'next/link';
 import { FaArrowLeft, FaEye, FaEyeSlash, FaPlus } from 'react-icons/fa';
 
 export default function Register() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    location: '',
-    password: '',
-    confirmPassword: '',
-    agreeToTerms: false
-  });
-  
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    });
-  };
-  
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-  
-  const prevStep = () => {
-    setCurrentStep(currentStep - 1);
-  };
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically send the form data to your API
-    console.log('Form submitted:', formData);
-    // Proceed to success page or show success message
-    setCurrentStep(3);
-  };
+  const [currentStep,setcurrentStep]=useState(1)
+  const [showPassword,setShowPassword]=useState(false);
+  const [showConfirmPassword,setShowConfirmPassword]=useState(false);
+  const [formData,setformdata]=useState({
+
+    firstName:"",
+    lastName:"",
+    location:"",
+    password:"",
+    confirmPassword:"",
+    agreeToTerms:""
+})
+const nextStep=()=>{
+
+
+setcurrentStep(c=>c+1)  ;
+}
+const prevStep=()=>{
+  setcurrentStep(c=>c-1);
+}
+const handleChange=(e)=>{
+const {name,checked,value,type}=e.target;
+setformdata({...formData,[name]:type=="checkbox" ? checked:value});
+
+}
+const handleSubmit=()=>{
+   setcurrentStep(3);
+
+   //ready to take it to back end 
+}
 
   return (
     <>
