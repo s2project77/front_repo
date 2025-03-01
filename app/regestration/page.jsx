@@ -1,42 +1,41 @@
 // pages/register.js
 "use client"
-import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { FaArrowLeft, FaEye, FaEyeSlash, FaPlus } from 'react-icons/fa';
-
+import { useState } from 'react';
 export default function Register() {
-  const [currentStep,setcurrentStep]=useState(1)
-  const [showPassword,setShowPassword]=useState(false);
-  const [showConfirmPassword,setShowConfirmPassword]=useState(false);
-  const [formData,setformdata]=useState({
-
-    firstName:"",
-    lastName:"",
-    location:"",
-    password:"",
-    confirmPassword:"",
-    agreeToTerms:""
-})
+ {/* the regetration page*/ }
+const [currentStep,setcurrentStep]=useState(1)
+const [showPassword,setShowPassword]=useState(false);
+const [showConfirmPassword,setShowConfirmPassword]=useState(false);
+const [formDataRegestration,setformdataRegestration]=useState({
+ 
+   firstName:"",
+   lastName:"",
+   location:"",
+   password:"",
+   confirmPassword:"",
+   agreeToTerms:""
+ })
 const nextStep=()=>{
+ 
+ 
+ setcurrentStep(c=>c+1)  ;
+ }
 
-
-setcurrentStep(c=>c+1)  ;
-}
 const prevStep=()=>{
-  setcurrentStep(c=>c-1);
-}
+ setcurrentStep(c=>c-1);
+ }
 const handleChange=(e)=>{
-const {name,checked,value,type}=e.target;
-setformdata({...formData,[name]:type=="checkbox" ? checked:value});
-
+  const {value,name,checked,type}=e.target;
+  setformdataRegestration({...formDataRegestration,[name]:type=="checkbox"? checked:value})
 }
-const handleSubmit=()=>{
-   setcurrentStep(3);
+ const handleSubmit=()=>{
+  setcurrentStep(3);
 
-   //ready to take it to back end 
+  //ready to take it to back end 
 }
-
   return (
     <>
       <Head>
@@ -107,7 +106,7 @@ const handleSubmit=()=>{
                         id="firstName"
                         name="firstName"
                         required
-                        value={formData.firstName}
+                        value={formDataRegestration.firstName}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
@@ -121,7 +120,7 @@ const handleSubmit=()=>{
                         id="lastName"
                         name="lastName"
                         required
-                        value={formData.lastName}
+                        value={formDataRegestration.lastName}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
@@ -137,7 +136,7 @@ const handleSubmit=()=>{
                       id="email"
                       name="email"
                       required
-                      value={formData.email}
+                      value={formDataRegestration.email}
                       onChange={handleChange}
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
@@ -152,7 +151,7 @@ const handleSubmit=()=>{
                       id="location"
                       name="location"
                       required
-                      value={formData.location}
+                      value={formDataRegestration.location}
                       onChange={handleChange}
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       placeholder="City, State"
@@ -186,7 +185,7 @@ const handleSubmit=()=>{
                         id="password"
                         name="password"
                         required
-                        value={formData.password}
+                        value={formDataRegestration.password}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
@@ -211,7 +210,7 @@ const handleSubmit=()=>{
                         id="confirmPassword"
                         name="confirmPassword"
                         required
-                        value={formData.confirmPassword}
+                        value={formDataRegestration.confirmPassword}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
@@ -236,7 +235,7 @@ const handleSubmit=()=>{
                       id="agreeToTerms"
                       name="agreeToTerms"
                       required
-                      checked={formData.agreeToTerms}
+                      checked={formDataRegestration.agreeToTerms}
                       onChange={handleChange}
                       className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                     />
