@@ -4,7 +4,7 @@ const ProgressBar = ({ currentStep }) => {
     const steps = ["Get Started", "Verify", "Finish Registration"];
 
     return (
-        <div className="w-3/4 mx-auto flex items-center justify-between relative">
+        <div className="w-full md:w-5/6 sm:w-3/4 mx-auto flex items-center justify-between relative">
             {steps.map((step, index) => (
                 <div key={index} className="relative flex flex-1 flex-col items-center">
                     

@@ -13,7 +13,7 @@ function UploadSection({ title, description, uploadBoxes, sectionIndex, onFileUp
             uploaded={box.uploaded}
             sectionIndex={sectionIndex}
             boxIndex={boxIndex}
-            onFileUpload={onFileUpload} // ✅ تمرير الدالة
+            onFileUpload={onFileUpload} 
           />
         ))}
       </div>
