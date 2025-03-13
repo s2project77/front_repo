@@ -2,7 +2,7 @@ import Image from "next/image";
 export default function Descreption() { 
     return(<div
               id="descreption"
-              className="w-1/3 text-xl leading-loose text-gray-600"
+              className="sm:w-1/3 lg:w-1/3 md:w-1/3 text-xl leading-loose text-gray-600      " 
             >
               <h2 className="text-3xl font-bold text-green-600 mb-4">Setupping</h2>
               <p>
