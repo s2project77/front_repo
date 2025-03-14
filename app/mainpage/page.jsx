@@ -6,7 +6,7 @@ import { Right_part } from '../components/mainpage/right_part'
 const page1 = () => {
   return (
     <Layout>
-        <div className='grid bg-gray-100 min-h-screen md:grid-cols-[auto_3fr_2fr]  mt-3  grid-cols-1   '>
+        <div className='grid bg-gray-100 min-h-screen md:grid-cols-[1.3fr_3fr_2fr]    grid-cols-1   '>
    
       <Side_bar></Side_bar>
    

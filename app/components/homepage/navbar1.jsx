@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 const Navbar = () => {
   return (
-    <header className="bg-green-100  mt-3 mr-3 ml-3 shadow-lg backdrop-blur-3xl sticky top-0 z-50">
+    <header className="bg-gradient-to-r from-green-50 to-green-200  mt-3 mr-3 ml-3 shadow-lg backdrop-blur-3xl sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center">
           <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white mr-2">
