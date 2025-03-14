@@ -8,10 +8,10 @@ export  const Middle_part = () => {
 <input type="text" className='w-[86%] h-[68%] mt-2  ml-3  pl-10 py-3 border-gray-400 border-solid border rounded-xl ' placeholder='Search For Medicament' />
 <span className="pr-3 font-bold text-2xl justify-center mb-2 h-6 w-10 text-yellow-500"> 🔔</span>
     </div>
-    <div className='w-[85%] bg-green-100 rounded-xl flex flex-col gap-2   relative h-[7cm] mx-auto mt-3'>
+    <div className='w-[85%] bg-green-100 border  border-black shadow-xl shadow-gray-300 rounded-xl flex flex-col gap-2   relative h-[7cm] mx-auto mt-3'>
 <div className='flex  flex-row gap-2 flex-1 '>
 
-    <div className='relative h-full w-[40%]'><Image src={"/map.jpg"} width={0} height={0} alt='s' className='w-full h-full ' ></Image></div>
+    <div className='relative h-full w-[40%]'><Image src={"/map.jpg"} width={100} height={100} alt='s' className='w-full h-full object-cover ' ></Image></div>
     <div className='w-full h-full   '>
 <ul className='flex flex-col justify-center h-full '>
     <li className='text-left  '>
@@ -50,14 +50,14 @@ export  const Middle_part = () => {
     </div>
     <div className='w-[85%]  rounded-xl h-[3cm] flex flex-col gap-3 justify-center mx-auto mt-3'>
 <span  className='text-2xl mx-2 text-green-700 font-bold' >improve your website:</span >
-<p className='mx-3'>Adding feedback or reporting a problem will make your
-experience better in our website .</p>
+<p className='mx-3'>Adding a new medicament or informations will 
+improve your website so do not miss it  .</p>
     </div>
     
 
     <div className='w-[85%]  rounded-xl relative justify-center items-center h-[1cm] mx-auto '>
 
- <button className='w-full h-full rounded-xl font-bold text-1xl text-white bg-red-500  mt-2   '>add a feedback </button>
+ <button className='w-full h-full rounded-xl font-bold text-1xl text-white bg-red-500  mt-2  hover:bg-red-400   '>add an iformations about your  medicament </button>
 
 </div>
 

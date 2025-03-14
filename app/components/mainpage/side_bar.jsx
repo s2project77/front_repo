@@ -9,10 +9,10 @@ const side_bar_data=[{id:1,name:"medicament documents",link:"/"},
 ]
 export const Side_bar = () => {
   return (
-    <div  className=' font-bold text-black  relative flex flex-col gap-4 top-0 left-0  min-h-screen bottom-0 h-full py-7    text-left px-auto rounded-2xl bg-green-100 '   >
+    <div  className=' font-bold text-black shadow-lg shadow-gray-400  relative flex flex-col gap-4 top-0 left-0  min-h-screen bottom-0 h-full py-7    text-left px-auto rounded-2xl bg-green-100 '   >
 <div className='flex   flex-col relative mx-auto w-[90%]  h-[7cm] gap-3'>
     <h1 className=''>your location</h1>
-     <Image src={"/map.jpg"} className='w-full   h-full' width={0} height={0} alt='your location' ></Image>
+     <Image src={"/map.jpg"} className='w-full object-cover  h-full' width={100} height={100} alt='your location' ></Image>
 </div>
 <div className=' border border-gray-300 rounded-xl p-3 w-[90%] h-[4.5cm] mx-auto'>
 add medicament
