@@ -6,7 +6,7 @@ import { Table } from '../components/addmedicament/table'
   return (
     <Layout>
 
-<div className='grid grid-cols-1  mt-3 sm:grid-cols-[auto_4fr]'>
+<div className='grid grid-cols-1   sm:grid-cols-[1.1fr_4fr]'>
 
 <Side_bar></Side_bar>
 <Table></Table>
