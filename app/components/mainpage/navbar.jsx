@@ -18,7 +18,7 @@ export default function Navbar() {
 
     return (
     <header>
-        <div className='flex relative top-2 right-4 left-2 flex-row h-[2cm] justify-between bg-green-100  '>
+        <div className='flex shadow-md relative top-2 right-4 left-2 flex-row h-[2cm] justify-between bg-green-100  '>
  <div className='w-[5cm]  justify-center items-center text-center flex mx-auto    ' >
  <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white mr-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
