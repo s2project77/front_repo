@@ -9,7 +9,6 @@ const page1 = () => {
         <div className='grid min-h-screen md:grid-cols-[auto_3fr_2fr]  mt-3  grid-cols-1   '>
    
       <Side_bar></Side_bar>
-   
      <Middle_part></Middle_part>
      <Right_part></Right_part>
              </div>
