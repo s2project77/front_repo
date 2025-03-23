@@ -9,7 +9,6 @@ const page1 = () => {
         <div className='grid bg-gray-100 min-h-screen md:grid-cols-[1.3fr_3fr_2fr]    grid-cols-1   '>
    
       <Side_bar></Side_bar>
-   
      <Middle_part></Middle_part>
      <Right_part></Right_part>
              </div>

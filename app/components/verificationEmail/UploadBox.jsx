@@ -4,13 +4,13 @@ const UploadBox = ({ label, uploaded, sectionIndex, boxIndex, onFileUpload }) =>
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      onFileUpload(sectionIndex, boxIndex, file); // تمرير القسم والصندوق الصحيحين
+      onFileUpload(sectionIndex, boxIndex, file); 
     }
   };
 
   return (
     <button
-      className="w-64 h-40 border-2 border-dashed border-gray-400 bg-teal-50 rounded-lg flex flex-col items-center justify-center p-3 relative cursor-pointer"
+      className="w-64 h-40 border-2 border-dashed border-gray-400 bg-green-50 rounded-lg flex flex-col items-center justify-center p-3 relative cursor-pointer"
       onClick={() => document.getElementById(`upload-${sectionIndex}-${boxIndex}`).click()}
     >
       <p className="text-gray-600 font-medium">{label}</p>
