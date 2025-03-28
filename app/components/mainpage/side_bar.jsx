@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -32,15 +33,17 @@ setShow2(false)
      <h1 className=''>your location</h1></div>
    {Show &&  <Image src={"/map.jpg"} className='w-full   object-cover  h-full' width={100} height={100} alt='your location' ></Image>}
 </div>
-<div className='   w-[90%]  mx-auto'>
+
+<div  className='   w-[90%]  mx-auto'>
     <div className='flex flex-row gap-2 '>
     { Show2 ? (<ChevronDown className='cursor-pointer' onClick={handledisapear2}></ChevronDown>):(<ChevronRight onClick={handleShow2} ></ChevronRight>)}
-add medicament
+    <Link href="../addmedicament" >add medicament</Link>
 </div>
 {Show2 && <div className='border border-gray-300 py-5 rounded-xl'>
 <ImageUploader></ImageUploader>
 </div>}
 </div>
+
 <div className=' flex  mx-auto w-[90%] '>
     <ul className='flex flex-col gap-3'>
 {side_bar_data.map((data)=>
