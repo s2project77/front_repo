@@ -18,7 +18,7 @@ const Navbar = () => {
         <nav className="hidden md:flex space-x-8">
           <Link href="#regester" className="text-gray-700 hover:text-green-600 transition">Help</Link>
           <Link href="#footer" className="text-gray-700 hover:text-green-600 transition">Contact</Link>
-          <Link href="#" className="text-gray-700 hover:text-green-600 transition">Get started</Link>
+          <Link href="../mainpage" className="text-gray-700 hover:text-green-600 transition">Get started</Link>
           <Link href="#" className="text-gray-700 hover:text-green-600 transition">about Us</Link>
           <Link href="#section" className="text-gray-700 hover:text-green-600 transition"> Services</Link>
         </nav>
