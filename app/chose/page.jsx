@@ -1,10 +1,11 @@
-// pages/index.js
 "use client"
 import Link from 'next/link';
 import { useState } from 'react';
 import Head from 'next/head';
 
-export default function ChoicePage() {
+
+const App=()=>{
+  
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
@@ -18,9 +19,7 @@ export default function ChoicePage() {
       <header className="py-8 text-center">
         <h1 className="text-4xl font-bold text-indigo-900">Make Your Choice</h1>
         <p className="mt-2 text-lg text-indigo-700">Select the service you need today</p>
-      </header>
-
-      <main className="flex-grow flex items-center justify-center px-4">
+      </header>      <main className="flex-grow flex items-center justify-center px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
          
           <div 
@@ -38,7 +37,7 @@ export default function ChoicePage() {
             <div className="p-6 bg-white">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">Pharmacy</h2>
               <p className="text-gray-600">Access medications, health products, and speak with pharmacists.</p>
-              <Link href="/" > <button className="mt-4 w-full py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition-colors">
+              <Link href="/pharmacy" > <button className="mt-4 w-full py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition-colors">
                 Choose Pharmacy
               </button></Link>
             </div>
@@ -58,10 +57,10 @@ export default function ChoicePage() {
               </svg>
             </div>
             <div className="p-6 bg-white">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Medicine</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Doctor</h2>
               <p className="text-gray-600">Consult with doctors, get diagnoses, and treatment plans.</p>
               <button className="mt-4 w-full py-3 bg-indigo-500 text-white font-medium rounded-lg hover:bg-indigo-600 transition-colors">
-                Choose Medicine
+                Choose doctor
               </button>
             </div>
           </div>
@@ -72,5 +71,8 @@ export default function ChoicePage() {
         © {new Date().getFullYear()} Health Services | All Rights Reserved
       </footer>
     </div>
-  );
+  )
 }
+
+export default App;
+
