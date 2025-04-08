@@ -1,11 +1,13 @@
-// App.jsx
+// pages/index.js
+
 import Navbar from "../components/homepage/navbar1";
 import EmergencyBanner from "../components/homepage/emergencie";
 import HeroSection from "../components/homepage/hero";
 import ServicesSection from "../components/homepage/sections";
 import RegisterLoginSection from "../components/homepage/regester";
 import Footer from "../components/homepage/footer";
-const App=()=>{
+
+export default function Page() {
   return (
     <div className="min-h-screen bg-green-50">
       <Navbar />
@@ -17,6 +19,3 @@ const App=()=>{
     </div>
   );
 }
-
-export default App;
-
