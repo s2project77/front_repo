@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { ChevronRight } from "lucide-react";
 import { ChevronDown } from 'lucide-react';
+import Searchbar from '../searchbar';
 const table_data=[{
     id:1,name:"Medicament N",name_input:"Medicament_N"
 },
@@ -25,7 +26,7 @@ export const Table = () => {
 })
 const [Table_infos, setTable_infos] = useState(() => {
     const storedData = localStorage.getItem("Table");
-    return storedData ? JSON.parse(storedData) : [];
+    return storedData ? JSON.parse(storedData) : [{}];
 });
   console.log(Row_infos)
     const fillRow_infos=(e)=>{
@@ -93,12 +94,10 @@ return (
 
     return (
     <div className='bg-gray-100 items-center my-auto w-full justify-center sm:pt-7 h-screen pt-24  sm:h-full'>
-<div className='w-[80%] flex flex-col   h-full mx-auto'>
-<div className='w-[85%]  rounded-xl mb-2 flex flex-row relative justify-center items-center h-[2cm] mx-auto '>
-    <span className=" text-2xl text-gray-400 relative left-14 top-1  ">🔍</span>
-<input type="text" className='w-[86%] h-[68%] mt-2  ml-3  pl-14 py-3 border-gray-400 border-solid border rounded-xl ' placeholder='Search For Medicament' />
-<span className="pr-3 pl-2 font-bold text-2xl justify-center mb-2 h-6 w-10 text-yellow-500"> 🔔</span>
-    </div>
+<div className='w-[80%]  flex-col flex items-center justify-center px-20 gap-8  h-full mx-auto'>
+
+<Searchbar data={Table_infos}/>
+
 <div className='flex flex-col gap-3'>
     <button className="flex items-center text-red-600 font-bold text-lg">
     {  show  ?( <ChevronRight  onClick={handledisapear}  />):(< ChevronDown onClick={hadndleshow} />)}

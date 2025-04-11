@@ -2,6 +2,7 @@ import Layout from '../components/mainpage_layout/layout'
 import React from 'react'
 import { Side_bar } from '../components/mainpage/side_bar'
 import { Table } from '../components/addmedicament/table'
+
  const page = () => {
   return (
     <Layout>
