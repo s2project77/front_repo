@@ -5,6 +5,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown,ChevronRight } from 'lucide-react'
 import ImageUploader from './input_file'
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarHeader,
+  } from "@/components/ui/sidebar"
+  
 const side_bar_data=[{id:1,name:"medicament documents",link:"/"},
     {id:2,name:"Archive",link:"/"},
     {id:3,name:"history",link:"/"},
@@ -26,6 +34,9 @@ setShow(false)
 setShow2(false)
     }
   return (
+  
+      
+         
     <div  className=' font-bold text-black shadow-lg shadow-gray-400  relative flex flex-col gap-4 top-0 left-0  min-h-screen bottom-0 h-full py-7    text-left px-auto rounded-2xl bg-green-100 '   >
 <div className='flex   flex-col relative mx-auto w-[90%]  gap-3'>
    <div className='flex flex-row gap-2 '>

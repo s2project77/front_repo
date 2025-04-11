@@ -9,9 +9,6 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        signup_button:"bg-navbar_color",
-        Pharmacie_button:"bg-white",
-
         default:
           "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         destructive:
