@@ -34,7 +34,18 @@ const handleChange=(e)=>{
  const handleSubmit=()=>{
   setcurrentStep(3);
 
-  //ready to take it to back end 
+  //ready to take it to back end
+  // making the post of the form data to the server 
+  const handleSubmit=async (e)=>{
+    e.preventDefault();
+     const response=await fetch("https://jsonplaceholder.typicode.com/posts",{
+      method:"post",
+      headers:{"content-Type":"application/json"},
+      body:JSON.stringify(formDataRegestration)
+     })
+     const data=await response.json();
+     alert(data.message);
+  }
 }
   return (
     <>
@@ -172,7 +183,7 @@ const handleChange=(e)=>{
               
               {/* Step 2: Account Setup */}
               {currentStep === 2 && (
-                <div className="space-y-4">
+                <div onSubmit={handleSubmit} className="space-y-4">
                   <h2 className="text-xl font-semibold text-green-700 mb-3">Account Setup</h2>
                   
                   <div className="relative">

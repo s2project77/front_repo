@@ -23,6 +23,19 @@ const  handleSubmit=()=>{
 
    //ready to take it to back end 
 }
+const handleSubmitForm=async(e)=>{
+  e.preventDefault();
+  console.log("posting  log in data:"+formdata);
+  const data=await fetch("https://jsonplaceholder.typicode.com/posts",{
+    method:"post",
+    headers:{"content-Type":"application/json"},
+    body:JSON.stringify(formdata),
+  })
+  const res=await data.json();
+  
+  console.log("Response from API:", res); // Log full response
+  alert(`Posted! Passowrd: ${res.password} | Email: ${res.email || "Not returned by API"}`);
+}
   return (
     <section className='flex min-h-screen overflow-hidden'>
 
@@ -76,11 +89,15 @@ const  handleSubmit=()=>{
 
 </div>
 
-<form onSubmit={handleSubmit}>
+<form  onSubmit={(e)=>{handleSubmitForm(e);
+handleSubmit()
+}
+} >
 <div className="grid grid-cols-1 gap-4">
 <div >
  <label htmlFor="Email" className="block text-sm font-medium text-gray-700 mb-4">Email</label>
  <input  type='text' 
+ htmlFor="email"
  name='email'
  value={formdata.email}
  
@@ -91,7 +108,7 @@ const  handleSubmit=()=>{
  <div  >
  <label htmlFor="password" className="block mb-4 text-sm font-medium text-gray-700 " >Password</label>
  <div className='relative'>
- <input type='text'  
+ <input type='password' htmlFor="password"  
   name='password'
   value={formdata.password}
   onChange={handleChange}
@@ -127,7 +144,7 @@ const  handleSubmit=()=>{
                     Your account has been created. You can now access all our pharmacy services.
                   </p>
                   
-                  <Link href="/home" className="inline-block bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-colors font-medium">
+                  <Link href="/mainpage" className="inline-block bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-colors font-medium">
                     Go to Main page
                   </Link>
                 </div>)}
