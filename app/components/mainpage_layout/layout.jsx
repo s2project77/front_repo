@@ -6,6 +6,7 @@ const Layout=({ children })=> {
   return (
     <div className='min-h-screen    overflow-hidden '>
         <Navbar/>
+        
        
         {children}</div>
   )

@@ -71,7 +71,11 @@ export default function Profile({ }) {
         <Bell color="#ffc400" size="36" />
       </button>
       <div className="flex gap-2 items-center">
+<<<<<<< HEAD
         <Image src="/profile2.svg" alt="profile" width="30" height="30" />
+=======
+        <Image src="/profile2.png" alt="profile" width="30" height="30" />
+>>>>>>> bc71b3d6fb4ff2f0f7a3ae281273d77b75d6d1bc
         <h3 className="text-green-800 text-xl font-semibold ">{ isEditing ? "Edit Profile " : "Profile"}</h3>
       </div>
 

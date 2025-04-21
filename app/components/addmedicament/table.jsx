@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { ChevronRight } from "lucide-react";
 import { ChevronDown } from 'lucide-react';
+import Searchbar from '../searchbar';
 const table_data=[{
     id:1,name:"Medicament N",name_input:"Medicament_N"
 },
@@ -23,10 +24,11 @@ export const Table = () => {
         Medicament_Label:"",
         Medicament_Status:""
 })
-const [Table_infos,setTable_infos]=useState(()=>{
-    return JSON.parse(localStorage.getItem("Table"))
-})
-    console.log(Row_infos)
+const [Table_infos, setTable_infos] = useState(() => {
+    const storedData = localStorage.getItem("Table");
+    return storedData ? JSON.parse(storedData) : [{}];
+});
+  console.log(Row_infos)
     const fillRow_infos=(e)=>{
     const {name} = e.target
     setRow_infos({...Row_infos,[name]:e.target.value})
@@ -73,19 +75,29 @@ localStorage.setItem("Table",JSON.stringify(Table_infos))
             p.Medicament_Label === Row_infos.Medicament_Label &&
             p.Medicament_Status === Row_infos.Medicament_Status
         );
-    });
+    });setTable_infos(new_Table_infos); };
+ const exist=()=>{
+    const find = Table_infos.find((p)=>{
+return (
+    p.Medicament_N === Row_infos.Medicament_N &&
+    p.Medicament_Name === Row_infos.Medicament_Name &&
+    p.Medicament_Family === Row_infos.Medicament_Family &&
+    p.Medicament_Label === Row_infos.Medicament_Label &&
+    p.Medicament_Status === Row_infos.Medicament_Status
+)
+}
+)
+}
+    
 
-    setTable_infos(new_Table_infos); 
-};
+
 
     return (
     <div className='bg-gray-100 items-center my-auto w-full justify-center sm:pt-7 h-screen pt-24  sm:h-full'>
-<div className='w-[80%] flex flex-col   h-full mx-auto'>
-<div className='w-[85%]  rounded-xl mb-2 flex flex-row relative justify-center items-center h-[2cm] mx-auto '>
-    <span className=" text-2xl text-gray-400 relative left-14 top-1  ">🔍</span>
-<input type="text" className='w-[86%] h-[68%] mt-2  ml-3  pl-14 py-3 border-gray-400 border-solid border rounded-xl ' placeholder='Search For Medicament' />
-<span className="pr-3 pl-2 font-bold text-2xl justify-center mb-2 h-6 w-10 text-yellow-500"> 🔔</span>
-    </div>
+<div className='w-[80%]  flex-col flex items-center justify-center px-20 gap-8  h-full mx-auto'>
+
+<Searchbar data={Table_infos}/>
+
 <div className='flex flex-col gap-3'>
     <button className="flex items-center text-red-600 font-bold text-lg">
     {  show  ?( <ChevronRight  onClick={handledisapear}  />):(< ChevronDown onClick={hadndleshow} />)}
@@ -144,7 +156,7 @@ localStorage.setItem("Table",JSON.stringify(Table_infos))
 
     {Table_infos.map((row,index)=>
         
-<tr className="" key={index}>      
+<tr   key={index}>      
 <td  className='border border-black h-[1cm] pl-6    ' >
     {row.Medicament_N}
 </td>

@@ -42,7 +42,11 @@ export default function EditProfile({
               </button>
             </div>
           ) : (
+<<<<<<< HEAD
             <div className="w-40 h-40 bg-gray-200 border border-gray-300 rounded-full flex items-center justify-center text-gray-500">
+=======
+            <div className="w-40 h-40 bg-gray-200 border border-gray-300 rounded-md flex items-center justify-center text-gray-500">
+>>>>>>> bc71b3d6fb4ff2f0f7a3ae281273d77b75d6d1bc
               No Image
             </div>
           )}

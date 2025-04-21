@@ -34,7 +34,11 @@ export default function ProfileInfoCard({ pharmacyData }) {
       <div className="w-full md:w-4/6 space-y-4 md:space-y-6">
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
           <Image
+<<<<<<< HEAD
             src={pharmacyData.image || "/profile2.svg"}
+=======
+            src={pharmacyData.image || "/profile2.png"}
+>>>>>>> bc71b3d6fb4ff2f0f7a3ae281273d77b75d6d1bc
             alt="profile"
             width="150"
             height="150"
