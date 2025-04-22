@@ -1,10 +1,11 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import ProfileInfoCard from "./ProfileInfoCard";
 import { Bell, Pencil } from "lucide-react";
 import Image from "next/image";
 import EditProfile from "./EditProfile";
-export default function Profile({ }) {
+
+export default function Profile({ color }) {
   const initialData = {
     name: "Green Life Pharmacy",
     location: "123 Main Street, Casablanca",
@@ -65,34 +66,48 @@ export default function Profile({ }) {
     }
     setIsEditing(true);
   };
+
+  // Map color prop to background
+  const bgColorMap = {
+    blue: "bg-blue-200",
+    green: "bg-green-200",
+    red: "bg-red-200",
+    // Add more colors as needed
+  };
+
+
+
   return (
-    <div className="flex flex-col p-8 gap-8">
+    <div className={`flex flex-col p-8 gap-8`}>
       <button className="self-end">
-        <Bell color="#ffc400" size="36" />
+        <Bell color={color} size="36" />
       </button>
       <div className="flex gap-2 items-center">
-<<<<<<< HEAD
         <Image src="/profile2.svg" alt="profile" width="30" height="30" />
-=======
-        <Image src="/profile2.png" alt="profile" width="30" height="30" />
->>>>>>> bc71b3d6fb4ff2f0f7a3ae281273d77b75d6d1bc
-        <h3 className="text-green-800 text-xl font-semibold ">{ isEditing ? "Edit Profile " : "Profile"}</h3>
+        <h3 className={`text-${color}-800 text-xl font-semibold`}>
+          {isEditing ? `Edit Profile (${color.charAt(0).toUpperCase() + color.slice(1)})` : `Profile (${color.charAt(0).toUpperCase() + color.slice(1)})`}
+        </h3>
       </div>
 
       {isEditing ? (
-                <EditProfile
-                  pharmacyData={pharmacyData}
-                  onClick={() => setIsEditing(false)}
-                  onCancel={handleCancel}
+        <EditProfile
+          pharmacyData={pharmacyData}
+          onClick={() => setIsEditing(false)}
+          onCancel={handleCancel}
           onChange={handleChange}
           onImageUpload={handleImageUpload}
-                />
-              ) : (
-                <ProfileInfoCard pharmacyData={pharmacyData}></ProfileInfoCard>
-              )}
-      <button onClick={handleEdit} className="bg-green-100 w-fit py-2 px-6 rounded-lg shadow-lg text-gray-500 self-end hover:bg-green-500 hover:text-white"> 
+          color={color}
+        />
+      ) : (
+        <ProfileInfoCard color={color} pharmacyData={pharmacyData} />
+      )}
+
+      <button 
+        onClick={handleEdit} 
+        className={`bg-${color}-100 w-fit py-2 px-6 rounded-lg shadow-lg text-gray-500 self-end hover:bg-${color}-500 hover:text-white`}>
         <div className="flex gap-4 items-center">
-          <p>Edit</p> <Pencil />
+          <p>Edit</p>
+          <Pencil />
         </div>
       </button>
     </div>

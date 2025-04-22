@@ -2,10 +2,18 @@
 import Image from "next/image";
 import React from "react";
 
-export default function ProfileInfoCard({ pharmacyData }) {
+export default function ProfileInfoCard({ pharmacyData, color }) {
+  const bgColorMap = {
+    blue: "bg-blue-200",
+    green: "bg-green-200",
+    // add more if needed
+  };
+
+  const background = bgColorMap[color] || "bg-gray-200";
+
   if (!pharmacyData) {
     return (
-      <div className="flex p-8 bg-green-200 rounded-lg shadow-lg animate-pulse">
+      <div className={`flex p-8 rounded-lg shadow-lg animate-pulse ${background}`}>
         <div className="w-4/6 space-y-6">
           <div className="flex gap-8 items-center">
             <div className="w-24 h-24 bg-gray-300 rounded-full"></div>
@@ -30,15 +38,11 @@ export default function ProfileInfoCard({ pharmacyData }) {
   }
 
   return (
-    <div className="flex flex-col md:flex-row p-4 md:p-8 bg-green-200 rounded-lg shadow-lg">
+    <div className={`flex flex-col md:flex-row p-4 md:p-8 ${background} rounded-lg shadow-lg`}>
       <div className="w-full md:w-4/6 space-y-4 md:space-y-6">
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
           <Image
-<<<<<<< HEAD
             src={pharmacyData.image || "/profile2.svg"}
-=======
-            src={pharmacyData.image || "/profile2.png"}
->>>>>>> bc71b3d6fb4ff2f0f7a3ae281273d77b75d6d1bc
             alt="profile"
             width="150"
             height="150"
