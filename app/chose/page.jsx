@@ -59,9 +59,10 @@ const App=()=>{
             <div className="p-6 bg-white">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">Doctor</h2>
               <p className="text-gray-600">Consult with doctors, get diagnoses, and treatment plans.</p>
-              <button className="mt-4 w-full py-3 bg-indigo-500 text-white font-medium rounded-lg hover:bg-indigo-600 transition-colors">
+              <Link href="/medicine" ><button className="mt-4 w-full py-3 bg-indigo-500 text-white font-medium rounded-lg hover:bg-indigo-600 transition-colors">
                 Choose doctor
               </button>
+              </Link>
             </div>
           </div>
         </div>

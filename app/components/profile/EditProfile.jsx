@@ -1,10 +1,35 @@
+"use client";
+import React from "react";
+
 export default function EditProfile({
   pharmacyData,
   onChange,
   onImageUpload,
   onClick,
   onCancel,
+  color, // Receiving color prop here
 }) {
+  // Define dynamic color classes
+  const bgColorMap = {
+    blue: "bg-blue-100",
+    green: "bg-green-100",
+    // Add more colors as needed
+  };
+
+  const focusRingColorMap = {
+    blue: "focus:ring-blue-500 focus:border-blue-500",
+    green: "focus:ring-green-500 focus:border-green-500",
+  };
+
+  const buttonColorMap = {
+    blue: "bg-blue-700 hover:bg-blue-800",
+    green: "bg-green-700 hover:bg-green-800",
+  };
+
+  const background = bgColorMap[color] || "bg-gray-100"; // Default to gray if no color is passed
+  const focusRingClasses = focusRingColorMap[color] || "focus:ring-green-500 focus:border-green-500"; // Default to green focus ring
+  const buttonClasses = buttonColorMap[color] || "bg-green-700 hover:bg-green-800"; // Default to green button
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Save changes (e.g., call an API)
@@ -15,7 +40,7 @@ export default function EditProfile({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col p-8 bg-green-100 rounded-lg shadow-lg w-full mx-auto mt-4"
+      className={`flex flex-col p-8 ${background} rounded-lg shadow-lg w-full mx-auto mt-4`}
     >
       <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
       {/* Image Upload Section */}
@@ -47,7 +72,7 @@ export default function EditProfile({
             </div>
           )}
           {/* Custom File Input */}
-          <label className="cursor-pointer bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition">
+          <label className={`cursor-pointer ${buttonClasses} text-white px-4 py-2 rounded-lg shadow-md`}>
             Upload Image
             <input
               type="file"
@@ -67,7 +92,7 @@ export default function EditProfile({
         type="text"
         value={pharmacyData?.name || ""}
         onChange={(e) => onChange("name", e.target.value)}
-        className="p-2 border rounded-md w-full mb-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+        className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
 
       <label htmlFor="location" className="block mb-2 font-medium">
@@ -78,7 +103,7 @@ export default function EditProfile({
         type="text"
         value={pharmacyData?.location || ""}
         onChange={(e) => onChange("location", e.target.value)}
-        className="p-2 border rounded-md w-full mb-4 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+        className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
 
       <label htmlFor="firstName" className="block mb-2 font-medium">
@@ -89,7 +114,7 @@ export default function EditProfile({
         type="text"
         value={pharmacyData?.owner?.firstName || ""}
         onChange={(e) => onChange("owner.firstName", e.target.value)}
-        className="p-2 border rounded-md w-full mb-4 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+        className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
 
       <label htmlFor="lastName" className="block mb-2 font-medium">
@@ -100,7 +125,7 @@ export default function EditProfile({
         type="text"
         value={pharmacyData?.owner?.lastName || ""}
         onChange={(e) => onChange("owner.lastName", e.target.value)}
-        className="p-2 border rounded-md w-full mb-4 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+        className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
 
       <label htmlFor="phone" className="block mb-2 font-medium">
@@ -111,7 +136,7 @@ export default function EditProfile({
         type="text"
         value={pharmacyData?.contact?.phone || ""}
         onChange={(e) => onChange("contact.phone", e.target.value)}
-        className="p-2 border rounded-md w-full mb-4 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+        className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
 
       <label htmlFor="fax" className="block mb-2 font-medium">
@@ -122,7 +147,7 @@ export default function EditProfile({
         type="text"
         value={pharmacyData?.contact?.fax || ""}
         onChange={(e) => onChange("contact.fax", e.target.value)}
-        className="p-2 border rounded-md w-full mb-4 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+        className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
 
       <div className="flex gap-4">
@@ -135,7 +160,7 @@ export default function EditProfile({
         </button>
         <button
           type="submit"
-          className="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-all"
+          className={`px-4 py-2 ${buttonClasses} text-white rounded-md hover:bg-opacity-90 transition-all`}
         >
           Save Changes
         </button>

@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/mainpage_layout/layout';
-import { Side_bar } from '../components/mainpage/side_bar';
-import Searchbar from '../components/searchbar';
+import Layout from '@/app/components/medcine_layout/layout';
+import { Side_bar } from '@/app/components/mainpage/side_bar';
+import Searchbar from '@/app/components/searchbar';
 const Page = () => {
   const [fetchedData, setFetchedData] = useState([]);
   const [visible, setVisible] = useState([]);
@@ -13,7 +13,7 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetch("http://localhost:4001/api/medicines/getfamilies");
+        const result = await fetch("http://192.168.1.8:4001/api/medicines/getfamilies");
         const json = await result.json();
         const medicines = json.data.data; // this is the actual array
         setFetchedData(medicines);
@@ -66,7 +66,7 @@ const Page = () => {
       <div className="w-full min-h-full grid grid-cols-1 sm:grid-cols-[1.1fr_4fr]">
         <Side_bar />
         
-        <div className="flex pt-4 pb-5 min-h-screen   w-full relative flex-col gap-10 px-20">
+        <div className="flex p-6 min-h-screen    w-full relative flex-col gap-10 px-20">
           <div>
             <h1 className="text-2xl font-bold">Medicaments Documentation</h1>
           </div>
@@ -94,7 +94,7 @@ const Page = () => {
   {visible.map((item, index) => (
     <div 
       key={index} 
-     className="bg-white h-48 flex flex-col justify-between p-4 shadow-md border border-green-200 transition-all duration-300 ease-in-out transform hover:scale-110 cursor-pointer hover:rounded-2xl"
+    className="bg-white h-48 flex flex-col justify-between p-4 shadow-md border border-green-200 transition-all duration-300 ease-in-out transform hover:scale-110 cursor-pointer hover:rounded-2xl"c
     > 
       <p className="text-base font-semibold text-gray-800 truncate">{item.brandName}</p>
       <p className="text-sm text-gray-600 overflow-hidden line-clamp-3">{item.description}</p>
@@ -105,7 +105,7 @@ const Page = () => {
           <div className="flex justify-center mt-4">
             <button 
               onClick={nextPage} 
-              className="px-4 py-2 bg-green-500 shadow-md shadow-green-300 border-r-2 text-white rounded hover:bg-green-600 transition-colors"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
             >
               Load More
             </button>

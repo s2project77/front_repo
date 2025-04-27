@@ -1,6 +1,6 @@
 import UploadBox from "./UploadBox";
 
-function UploadSection({ title, description, uploadBoxes, sectionIndex, onFileUpload }) {
+function UploadSection({ title, description, uploadBoxes, sectionIndex, onFileUpload ,color }) {
   return (
     <div className="space-y-1 mb-6">
       <h2 className="text-xl font-bold">{title}</h2>
@@ -14,6 +14,7 @@ function UploadSection({ title, description, uploadBoxes, sectionIndex, onFileUp
             sectionIndex={sectionIndex}
             boxIndex={boxIndex}
             onFileUpload={onFileUpload} 
+            color = {color} // Pass color prop to UploadBox
           />
         ))}
       </div>
