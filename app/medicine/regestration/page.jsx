@@ -4,44 +4,71 @@ import Head from "next/head";
 import Link from "next/link";
 import { FaArrowLeft, FaEye, FaEyeSlash, FaPlus } from "react-icons/fa";
 import { useState } from "react";
+
 export default function Register() {
-  {
-    /* the regetration page*/
-  }
-  const [currentStep, setcurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [formDataRegestration, setformdataRegestration] = useState({
-    firstName: "",
-    lastName: "",
-    location: "",
+  const [errorMessage, setErrorMessage] = useState("");
+  const [formDataRegistration, setFormDataRegistration] = useState({
+    Firstname: "",
+    Lastname: "",
+    email: "",
     password: "",
     confirmPassword: "",
-    agreeToTerms: "",
+    agreeToTerms: false,
+    photo: "", // Keeping this for future file upload implementation
   });
+
   const nextStep = () => {
-    setcurrentStep((c) => c + 1);
+    setCurrentStep((c) => c + 1);
   };
 
   const prevStep = () => {
-    setcurrentStep((c) => c - 1);
+    setCurrentStep((c) => c - 1);
   };
+
   const handleChange = (e) => {
     const { value, name, checked, type } = e.target;
-    setformdataRegestration({
-      ...formDataRegestration,
-      [name]: type == "checkbox" ? checked : value,
+    setFormDataRegistration({
+      ...formDataRegistration,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
-  const handleSubmit = () => {
-    setcurrentStep(3);
 
-    //ready to take it to back end
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+    
+    try {
+      // Fixed the duplicate "/api/" in the URL path
+      const response = await fetch('http://192.168.15.167:3001/api/doctors/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataRegistration),
+        credentials: "include"
+      });
+      
+      if (response.ok) {
+        setCurrentStep(3); // Move to success page only after successful API call
+      } else {
+        // Handle error - get the error message from the response
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Registration failed. Please try again.');
+        console.error("Registration failed:", errorData);
+      }
+    } catch (error) {
+      setErrorMessage('Network error. Please check your connection and try again.');
+      console.error("Registration failed:", error);
+    }
   };
+
   return (
     <>
       <Head>
-        <title>Join Our Midicine Network - Registration</title>
+        <title>Join Our Medicine Network - Registration</title>
         <meta
           name="description"
           content="Create an account to join our pharmacy network and access exclusive benefits."
@@ -53,7 +80,7 @@ export default function Register() {
         {/* Left Panel */}
         <div className="hidden md:flex md:w-2/5 bg-gradient-to-b from-blue-900 to-blue-700 flex-col justify-between p-8">
           <div>
-            <div className="text-white text-2xl font-bold">MIDICNET</div>
+            <div className="text-white text-2xl font-bold">MEDICNET</div>
             <Link
               href="/"
               className="inline-flex items-center text-white hover:text-blue-200 mt-4 text-sm transition-all"
@@ -72,7 +99,7 @@ export default function Register() {
               Join Our
             </h2>
             <h2 className="text-3xl text-white font-bold text-center">
-              Midicine Network
+              Medicine Network
             </h2>
             <p className="text-blue-200 text-lg text-center mt-4 max-w-xs">
               Gain access to exclusive benefits and connect with healthcare
@@ -81,7 +108,7 @@ export default function Register() {
           </div>
 
           <div className="text-blue-200 text-sm">
-            © 2025 PharmaNet. All rights reserved.
+            © 2025 MedicNet. All rights reserved.
           </div>
         </div>
 
@@ -102,6 +129,13 @@ export default function Register() {
                 </Link>
               </p>
             </div>
+
+            {/* Error Message */}
+            {errorMessage && (
+              <div className="bg-red-50 p-4 mb-6 rounded-md border-l-4 border-red-500 text-sm text-red-700">
+                {errorMessage}
+              </div>
+            )}
 
             {/* Progress Bar */}
             {currentStep < 3 && (
@@ -130,34 +164,34 @@ export default function Register() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label
-                        htmlFor="firstName"
+                        htmlFor="Firstname"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
                         First Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
-                        id="firstName"
-                        name="firstName"
+                        id="Firstname"
+                        name="Firstname"
                         required
-                        value={formDataRegestration.firstName}
+                        value={formDataRegistration.Firstname}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                     <div>
                       <label
-                        htmlFor="lastName"
+                        htmlFor="Lastname"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
                         Last Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
-                        id="lastName"
-                        name="lastName"
+                        id="Lastname"
+                        name="Lastname"
                         required
-                        value={formDataRegestration.lastName}
+                        value={formDataRegistration.Lastname}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
@@ -176,28 +210,9 @@ export default function Register() {
                       id="email"
                       name="email"
                       required
-                      value={formDataRegestration.email}
+                      value={formDataRegistration.email}
                       onChange={handleChange}
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="location"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Location <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="location"
-                      name="location"
-                      required
-                      value={formDataRegestration.location}
-                      onChange={handleChange}
-                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="City, State"
                     />
                   </div>
 
@@ -233,7 +248,8 @@ export default function Register() {
                         id="password"
                         name="password"
                         required
-                        value={formDataRegestration.password}
+                        minLength="8"
+                        value={formDataRegistration.password}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
@@ -263,7 +279,7 @@ export default function Register() {
                         id="confirmPassword"
                         name="confirmPassword"
                         required
-                        value={formDataRegestration.confirmPassword}
+                        value={formDataRegistration.confirmPassword}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
@@ -282,7 +298,7 @@ export default function Register() {
                   <div className="bg-gray-50 p-4 rounded-md border-l-4 border-blue-500 text-sm text-gray-600 mt-6">
                     Your personal information is secure with us. We'll only use
                     your data in accordance with our privacy policy to provide
-                    you with pharmacy services.
+                    you with healthcare services.
                   </div>
 
                   <div className="flex items-center mt-4">
@@ -291,7 +307,7 @@ export default function Register() {
                       id="agreeToTerms"
                       name="agreeToTerms"
                       required
-                      checked={formDataRegestration.agreeToTerms}
+                      checked={formDataRegistration.agreeToTerms}
                       onChange={handleChange}
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
@@ -350,14 +366,14 @@ export default function Register() {
                   </h2>
                   <p className="text-gray-600 mb-8">
                     Your account has been created. You can now access all our
-                    pharmacy services.
+                    healthcare services.
                   </p>
 
                   <Link
-                    href="/home"
+                    href="/mainpage"
                     className="inline-block bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium"
                   >
-                    Go to Main page
+                    Go to Main Page
                   </Link>
                 </div>
               )}

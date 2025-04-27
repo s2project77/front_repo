@@ -15,7 +15,6 @@ const PatientCardsGrid = ({ patients }) => {
       bio: "Patient with chronic asthma. Regular check-ups required every 3 months. Allergic to penicillin.",
       avatar: null
     },
-    // Add more sample patients as needed
   ];
 
   return (

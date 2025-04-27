@@ -3,113 +3,144 @@ import React, { useState, useEffect } from 'react';
 import Layout from '@/app/components/medcine_layout/layout';
 import { Side_bar } from '@/app/components/mainpage/side_bar';
 import Searchbar from '@/app/components/searchbar';
+
 const Page = () => {
   const [fetchedData, setFetchedData] = useState([]);
   const [visible, setVisible] = useState([]);
   const [page, setPage] = useState(0);
- 
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetch("http://192.168.1.8:4001/api/medicines/getfamilies");
-        const json = await result.json();
-        const medicines = json.data.data; // this is the actual array
-        setFetchedData(medicines);
-        setVisible(medicines.slice(0, 9)); // first 9 items
+        setLoading(true);
+        const response = await fetch("http://192.168.15.167:4000/api/medicines/getAllMedicines");
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.status !== "success" || !result.data?.data) {
+          throw new Error("Invalid data format received from API");
+        }
+        
+        setFetchedData(result.data.data);
+        setVisible(result.data.data.slice(0, 9));
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError(error.message);
+        setLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
-  
 
-  {/* useEffect(() => {
-    const fetchData = async () => {
-      try {
-        
-       // http://192.168.239.229:3000/api/medicines/getFamilies
-        const result = await fetch("http://192.168.239.229:3000/api/medicines/getFamilies");
-        const data = await result.json();
-        setFetchedData(data);
-        setVisible(data.slice(0, 9));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    
-    fetchData();
-  }, []);*/}
-  
- {/* const nextPage = () => {
-    const nextPage = page + 1;
-    const start = nextPage * 9;
+  const nextPage = () => {
+    const nextPageNum = page + 1;
+    const start = nextPageNum * 9;
     const end = start + 9;
-    setPage(nextPage);
+    
+    if (start >= fetchedData.length) return; // Don't go beyond available data
+    
+    setPage(nextPageNum);
     setVisible(fetchedData.slice(start, end));
   };
- */}
- const nextPage = () => {
-  const nextPageNum = page + 1;
-  const start = nextPageNum * 9;
-  const end = start + 9;
-  setPage(nextPageNum);
-  setVisible(fetchedData.slice(start, end));
-};
 
-  
+  const prevPage = () => {
+    if (page === 0) return;
+    const prevPageNum = page - 1;
+    const start = prevPageNum * 9;
+    const end = start + 9;
+    setPage(prevPageNum);
+    setVisible(fetchedData.slice(start, end));
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="w-full min-h-screen flex justify-center items-center">
+          <div className="text-xl">Loading medicines...</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="w-full min-h-screen flex justify-center items-center">
+          <div className="text-xl text-red-500">Error: {error}</div>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="w-full min-h-full grid grid-cols-1 sm:grid-cols-[1.1fr_4fr]">
         <Side_bar />
-        
-        <div className="flex p-6 min-h-screen    w-full relative flex-col gap-10 px-20">
+       
+        <div className="flex p-6 min-h-screen w-full relative flex-col gap-10 px-4 sm:px-20">
           <div>
-            <h1 className="text-2xl font-bold">Medicaments Documentation</h1>
+            <h1 className="text-2xl font-bold">Medicaments Documentation
+
+            
+
+            </h1>
           </div>
           
           <div className="flex items-center justify-center">
             <Searchbar data={fetchedData} />
           </div>
           
-          {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full sm:w-[80%] mx-auto">
-            {visible.map((item,index) => (
-            
-              <div 
-                key={index} 
-                className="bg-red-200 h-48 flex flex-col p-4 shadow-sm border shadow-gray-400 rounded"
-              > 
-                <p className="text-sm overflow-hidden">{item.brandName}</p>
-               
-             
-                
+          {visible.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl mx-auto">
+                {visible.map((item) => (
+                  <div 
+                    key={item._id}
+                    className="bg-white h-60 flex flex-col justify-between p-4 shadow-md border border-green-200 rounded-lg transition-all duration-300 hover:shadow-lg hover:border-green-400"
+                  > 
+                    <div>
+                      <p className="text-lg font-bold text-gray-800">{item.brandName}</p>
+                      <p className="text-sm text-gray-600 font-medium">{item.genericName}</p>
+                      <p className="text-xs text-gray-500 mt-1">Form: {item.form}</p>
+                    </div>
+                    <p className="text-sm text-gray-600 mt-2 line-clamp-3">{item.description}</p>
+                   
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl mx-auto px-4">
-  {visible.map((item, index) => (
-    <div 
-      key={index} 
-    className="bg-white h-48 flex flex-col justify-between p-4 shadow-md border border-green-200 transition-all duration-300 ease-in-out transform hover:scale-110 cursor-pointer hover:rounded-2xl"c
-    > 
-      <p className="text-base font-semibold text-gray-800 truncate">{item.brandName}</p>
-      <p className="text-sm text-gray-600 overflow-hidden line-clamp-3">{item.description}</p>
-    </div>
-  ))}
-</div>
 
-          <div className="flex justify-center mt-4">
-            <button 
-              onClick={nextPage} 
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-            >
-              Load More
-            </button>
-          </div>
+              <div className="flex justify-center gap-4 mt-4">
+                {page > 0 && (
+                  <button 
+                    onClick={prevPage} 
+                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+                  >
+                    Previous
+                  </button>
+                )}
+                {fetchedData.length > (page + 1) * 9 && (
+                  <button 
+                    onClick={nextPage} 
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-10">
+              <p className="text-gray-500">No medicines found</p>
+            </div>
+          )}
         </div>
       </div>
     </Layout>
