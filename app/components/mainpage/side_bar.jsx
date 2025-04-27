@@ -1,5 +1,5 @@
 "use client";
-
+import { Database, Archive, User,MapPin, PlusCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/sidebar";
 
 const side_bar_data = [
-  { id: 1, name: "medicament documents", link: "/" },
-  { id: 2, name: "Archive", link: "/" },
-  { id: 3, name: "history", link: "/" },
-  { id: 4, name: "profile", link: "/" },
+  { id: 1, name: "medicament documents", link: "/" ,icon: Database},
+  { id: 2, name: "Archive", link: "/" , icon: Archive},
+  
+  { id: 3, name: "profile", link: "/" ,icon: User},
 ];
 
 export const Side_bar = ({ color = 'green' }) => {
@@ -30,29 +30,32 @@ export const Side_bar = ({ color = 'green' }) => {
 
   // Define dynamic color classes
   const bgColorMap = {
-    blue: "bg-blue-100",
-    green: "bg-green-100",
+    blue: "bg-slate-100",
+    green: "bg-gray-100",
   };
 
   const linkColorMap = {
-    blue: "text-blue-700 hover:text-blue-900",
-    green: "text-green-700 hover:text-green-900",
+    blue: "text-slate-700 ",
+    green: "text-black ",
   };
 
   const background = bgColorMap[color] || "bg-gray-100"; // Default to gray if no color is passed
-  const linkClasses = linkColorMap[color] || "text-green-700 hover:text-green-900"; // Default to green links
+  const linkClasses = linkColorMap[color] || "text-gree-700 hover:text-green-100"; // Default to green links
 
   return (
-    <div className={`font-bold text-black shadow-lg shadow-gray-400 relative flex flex-col gap-4 top-0 left-0 min-h-screen bottom-0 h-full py-7 text-left px-auto rounded-2xl ${background}`}>
-      {/* Location Section */}
-      <div className='flex flex-col relative mx-auto w-[90%] gap-3'>
-        <div className='flex flex-row gap-2'>
+    <div className={`font-bold text-black shadow-lg min-h-screen relative shadow-gray-300   flex flex-col gap-4 top-0 left-0  bottom-0 h-full py-7 text-left px-auto rounded-2xl ${background}`}>
+     {/* Location Section */}
+     <div className='flex flex-col relative mx-auto w-[90%] gap-3'>
+        <div className='flex flex-row gap-2 items-center'>
           {Show ? (
             <ChevronDown className='cursor-pointer' onClick={handledisapear}></ChevronDown>
           ) : (
             <ChevronRight onClick={handleShow}></ChevronRight>
           )}
-          <h1 className=''>your location</h1>
+          <div className='flex hover:bg-white w-[100%] p-1 cursor-pointer items-center gap-2'>
+            <MapPin size={20} />
+            <h1 >your location</h1>
+          </div>
         </div>
         {Show && (
           <Image
@@ -65,16 +68,18 @@ export const Side_bar = ({ color = 'green' }) => {
         )}
       </div>
 
-      {/* Add Medicament Section */}
+
+     
       <div className='w-[90%] mx-auto'>
-        <div className='flex flex-row gap-2'>
+        <div className='flex   flex-row gap-2 items-center'>
           {Show2 ? (
             <ChevronDown className='cursor-pointer' onClick={handledisapear2}></ChevronDown>
           ) : (
             <ChevronRight onClick={handleShow2}></ChevronRight>
           )}
-          <Link href="../addmedicament" className={linkClasses}>
-            add medicament
+          <Link href="../addmedicament"  className={`${linkClasses} flex hover:bg-white w-[100%] mb-1 cursor-pointer  flex-row`}>
+            <PlusCircle className='pt-1'  size={20} />
+            <span className='pl-2 pb-1 '>add medicament</span>
           </Link>
         </div>
         {Show2 && (
@@ -84,18 +89,21 @@ export const Side_bar = ({ color = 'green' }) => {
         )}
       </div>
 
-      {/* Sidebar Links */}
-      <div className='flex mx-auto w-[90%]'>
-        <ul className='flex flex-col gap-3'>
-          {side_bar_data.map((data) => (
-            <li key={data.id}>
-              <Link href={data.link} className={linkClasses}>
-                {data.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+
+      <div className='flex mx-auto w-[90%] relative'>
+      <ul className='flex flex-col gap-3 w-full relative'>
+        {side_bar_data.map((data) => (
+          <li className='hover:bg-white w-[100%] p-1' key={data.id}>
+            <Link href={data.link} className={linkClasses}>
+              <span className="inline-flex items-center">
+                {data.icon && <data.icon size={20} />}
+                <span className="ml-2">{data.name}</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
     </div>
   );
 };

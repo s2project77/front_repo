@@ -1,15 +1,15 @@
 import React from 'react'
-import Layout from '../../components/mainpage_layout/layout'
-import { Side_bar } from '../../components/mainpage/side_bar'
-import { Middle_part } from '../../components/mainpage/middle_part'
-import { Right_part } from '../../components/mainpage/right_part'
+import Layout from '@/app/components/medcine_layout/layout'
+import { Middle_part } from '@/app/components/medicine/mainpage/middilpart'
+import { Right_part } from '@/app/components/medicine/mainpage/rightpart'
+import { Side_bar } from '@/app/components/mainpage/side_bar'
 const page1 = () => {
   return (
     <Layout>
-        <div id='mainpage' className='grid bg-gray-100 min-h-screen md:grid-cols-[1.3fr_3fr_2fr]    grid-cols-1   '>
+        <div id='mainpage' className='grid bg-white min-h-screen md:grid-cols-[1.3fr_3fr_1.3fr]    grid-cols-1   '>
       <Side_bar color={'blue'}></Side_bar>
-     <Middle_part themeColor={'blue'}></Middle_part>
-     <Right_part></Right_part>
+     <Middle_part themeColor={'slate'}></Middle_part>
+     
              </div>
 </Layout>  )
 }

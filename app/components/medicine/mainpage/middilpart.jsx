@@ -1,13 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
-import  search from "../search.svg"
-export const Middle_part = ({ themeColor = 'green' }) => {
-  const textTheme = `text-${themeColor}-600`;
+import  search from "../../search.svg"
+export const Middle_part = ({ themeColor = 'slate' }) => {
+  const textTheme = `text-${themeColor}-400`;
   const bgTheme = `bg-${themeColor}-100`;
   const borderTheme = `border-${themeColor}-300`;
 
   return (
-    <div className="min-h-screen border shadow-md   p-3 m-2 mx-3  bg-gray-100 rounded-lg max-h-screen flex flex-col gap-3 pt-6 relative items-center">
+    <div className="min-h-screen border shadow-md  p-3 m-4   bg-gray-100 rounded-lg max-h-screen flex flex-col gap-3 pt-6 relative items-center">
       {/* Search Box */}
       <div className="w-[85%]  rounded-xl flex flex-row relative justify-center items-center h-[2cm] mx-auto">
         <span className="text-2xl text-blue-500 absolute left-8">   <Image  src={search} className='pt-2 pl-2'  width={30} height={20} alt='0'   ></Image></span>
@@ -73,7 +73,7 @@ export const Middle_part = ({ themeColor = 'green' }) => {
 
       {/* Info Prompt */}
       <div className="w-[85%] rounded-xl h-[3cm] flex flex-col border shadow-lg  bg-white gap-3 justify-center mx-auto mt-3">
-        <span className={`text-2xl mx-2 font-bold ${textTheme}`}>
+        <span className={`text-2xl mx-2 font-bold text-slate-700 `}>
           Improve your website
         </span>
         <p className="mx-3">
@@ -83,8 +83,8 @@ export const Middle_part = ({ themeColor = 'green' }) => {
 
       {/* CTA Button (red kept as requested) */}
       <div className="w-[85%] rounded-xl relative justify-center items-center h-[1cm] mx-auto">
-        <button className="w-[65%] flex text-slate-700         bg-green-200 shadow-lg  p-5  items-center content-center text-center  mx-auto justify-center  h-full rounded-xl font-bold text-1xl  mt-2 hover:bg-green-400">
-            <span  className='mr-10' > <Image src={"add-icon-svgrepo-com.svg"}  width={20} height={20} alt=' 4d'  ></Image> </span>  Add information about your medicament
+        <button className="w-[65%] flex text-slate-900         bg-slate-400 border shadow-lg  p-5  items-center content-center text-center  mx-auto justify-center  h-full rounded-xl font-bold text-1xl  hover:text-white mt-2 hover:bg-slate-700">
+            <span  className='mr-10' > <Image src={"./../add-icon-svgrepo-com.svg"}  width={20} height={20} alt=' 4d'  ></Image> </span>  Add information about your medicament
         </button>
       </div>
     </div>

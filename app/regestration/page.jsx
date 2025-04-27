@@ -4,38 +4,112 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { FaArrowLeft, FaEye, FaEyeSlash, FaPlus } from 'react-icons/fa';
 import { useState } from 'react';
+
 export default function Register() {
- {/* the regetration page*/ }
-const [currentStep,setcurrentStep]=useState(1)
-const [showPassword,setShowPassword]=useState(false);
-const [showConfirmPassword,setShowConfirmPassword]=useState(false);
-const [formDataRegestration,setformdataRegestration]=useState({
- 
-   firstName:"",
-   lastName:"",
-   location:"",
-   password:"",
-   confirmPassword:"",
-   agreeToTerms:""
- })
-const nextStep=()=>{
- 
- 
- setcurrentStep(c=>c+1)  ;
- }
+  const [currentStep, setCurrentStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formDataRegistration, setFormDataRegistration] = useState({
+    name: "",
+    location: "",
+    coordinates: [0,0], // Default coordinates as [longitude, latitude]
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "", // Optional in schema but good to have
+    agreeToTerms: false
+  });
 
-const prevStep=()=>{
- setcurrentStep(c=>c-1);
- }
-const handleChange=(e)=>{
-  const {value,name,checked,type}=e.target;
-  setformdataRegestration({...formDataRegestration,[name]:type=="checkbox"? checked:value})
-}
- const handleSubmit=()=>{
-  setcurrentStep(3);
+  const nextStep = () => {
+    setCurrentStep(c => c + 1);
+  };
 
-  //ready to take it to back end 
-}
+  const prevStep = () => {
+    setCurrentStep(c => c - 1);
+  };
+
+  const handleChange = (e) => {
+    const { value, name, checked, type } = e.target;
+    setFormDataRegistration({
+      ...formDataRegistration,
+      [name]: type === "checkbox" ? checked : value
+    });
+  };
+
+  const getCoordinates = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords = {
+          lng: position.coords.longitude,
+          lat: position.coords.latitude
+        };
+        setFormDataRegistration({
+          ...formDataRegistration,
+          coordinates: coords
+        });
+        alert("Location coordinates have been captured successfully!");
+      },
+      (error) => {
+        console.error("Error getting geolocation:", error);
+        alert("Failed to get your location. Please try again or enter coordinates manually.");
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+};
+
+   
+  // Handle form submission
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    
+    // Basic validation
+    if (formDataRegistration.password !== formDataRegistration.confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+    
+    if (formDataRegistration.password.length < 8) {
+      alert("Password must be at least 8 characters long!");
+      return;
+    }
+    
+    // Create payload object matching schema requirements
+    const payload = {
+      name: formDataRegistration.name,
+      location: formDataRegistration.location,
+      coordinates: formDataRegistration.coordinates,
+      email: formDataRegistration.email,
+      password: formDataRegistration.password,
+      confirmPassword: formDataRegistration.confirmPassword,
+      phone: formDataRegistration.phone || undefined
+    };
+     
+    try {
+      const response = await fetch("http:/192.168.1.8:4001/api/pharmacies/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        credentials:"include"
+         
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Registration failed");
+      }
+  
+      const data = await response.json();
+      console.log("Server response:", data);
+      setCurrentStep(3); // Move to success page after successful submission
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert(`Failed to submit form: ${error.message}`);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -89,42 +163,26 @@ const handleChange=(e)=>{
                 <div className={`h-1 flex-1 ${currentStep >= 2 ? 'bg-green-600' : 'bg-gray-200'}`}></div>
               </div>
             )}
-            
-            <form onSubmit={handleSubmit}>
+
+            <form onSubmit={handleSubmitForm}>
               {/* Step 1: Personal Information */}
               {currentStep === 1 && (
                 <div className="space-y-4">
                   <h2 className="text-xl font-semibold text-green-700 mb-3">Personal Information</h2>
                   
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-                        First Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        required
-                        value={formDataRegestration.firstName}
-                        onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-                        Last Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        name="lastName"
-                        required
-                        value={formDataRegestration.lastName}
-                        onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      />
-                    </div>
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Pharmacy Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formDataRegistration.name}
+                      onChange={handleChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
                   </div>
                   
                   <div>
@@ -136,7 +194,21 @@ const handleChange=(e)=>{
                       id="email"
                       name="email"
                       required
-                      value={formDataRegestration.email}
+                      value={formDataRegistration.email}
+                      onChange={handleChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formDataRegistration.phone}
                       onChange={handleChange}
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
@@ -144,18 +216,69 @@ const handleChange=(e)=>{
                   
                   <div>
                     <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
-                      Location <span className="text-red-500">*</span>
+                      Location Address <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       id="location"
                       name="location"
                       required
-                      value={formDataRegestration.location}
+                      value={formDataRegistration.location}
                       onChange={handleChange}
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      placeholder="City, State"
+                      placeholder="Full address"
                     />
+                  </div>
+                  
+                  <div>
+                    <button
+                      type="button"
+                      onClick={getCoordinates}
+                      className="mt-2 bg-blue-500 text-white py-2 px-3 rounded-md hover:bg-blue-600 transition-colors text-sm"
+                    >
+                      Get My Coordinates
+                    </button>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Click to automatically get your location coordinates or enter manually below:
+                    </p>
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div>
+                        <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 mb-1">
+                          Longitude <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          step="0.000001"
+                          id="longitude"
+                          required
+                          value={formDataRegistration.coordinates[0]}
+                          onChange={(e) => {
+                            const newCoords = [...formDataRegistration.coordinates];
+                            newCoords[0] = parseFloat(e.target.value);
+                            setFormDataRegistration({...formDataRegistration, coordinates: newCoords});
+                          }}
+                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 mb-1">
+                          Latitude <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          step="0.000001"
+                          id="latitude"
+                          required
+                          value={formDataRegistration.coordinates[1]}
+                          onChange={(e) => {
+                            const newCoords = [...formDataRegistration.coordinates];
+                            newCoords[1] = parseFloat(e.target.value);
+                            setFormDataRegistration({...formDataRegistration, coordinates: newCoords});
+                          }}
+                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="pt-4">
@@ -185,7 +308,7 @@ const handleChange=(e)=>{
                         id="password"
                         name="password"
                         required
-                        value={formDataRegestration.password}
+                        value={formDataRegistration.password}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
@@ -210,7 +333,7 @@ const handleChange=(e)=>{
                         id="confirmPassword"
                         name="confirmPassword"
                         required
-                        value={formDataRegestration.confirmPassword}
+                        value={formDataRegistration.confirmPassword}
                         onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
@@ -235,7 +358,7 @@ const handleChange=(e)=>{
                       id="agreeToTerms"
                       name="agreeToTerms"
                       required
-                      checked={formDataRegestration.agreeToTerms}
+                      checked={formDataRegistration.agreeToTerms}
                       onChange={handleChange}
                       className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                     />
@@ -276,7 +399,7 @@ const handleChange=(e)=>{
                     Your account has been created. You can now access all our pharmacy services.
                   </p>
                   
-                  <Link href="/home" className="inline-block bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-colors font-medium">
+                  <Link href="/mainpage" className="inline-block bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-colors font-medium">
                     Go to Main page
                   </Link>
                 </div>

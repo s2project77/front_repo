@@ -47,9 +47,9 @@ const RegisterLoginSection = () => {
               <FeatureItem>Manage notifications</FeatureItem>
             </ul>
             
-            <a href="#" className="block w-full py-3 px-4 border border-green-600 text-green-600 rounded-md text-center font-medium hover:bg-green-50 transition">
+          <Link href={"/login"} >  <a href="#" className="block w-full py-3 px-4 border border-green-600 text-green-600 rounded-md text-center font-medium hover:bg-green-50 transition">
               Log In
-            </a>
+            </a></Link>
           </div>
         </div>
       </div>

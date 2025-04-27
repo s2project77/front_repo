@@ -1,4 +1,5 @@
 "use client"
+import search from './search.svg' 
 import React, { useState } from 'react'
 import Link from 'next/link'
 import {
@@ -27,7 +28,7 @@ export const Searchbar = ({ data }) => {
       >
         {/* Bell icon absolutely positioned */}
         <div className="absolute right-3 top-3 text-yellow-500 cursor-pointer hover:text-yellow-600 z-10">
-          🔔
+          <img href={search} />  
         </div>
 
         {/* All command logic inside here */}
@@ -38,7 +39,7 @@ export const Searchbar = ({ data }) => {
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup heading="Suggestions">
                 {data.map((item, index) => 
-                 <Link href={`/Documentation/${item.id}`} > <CommandItem   key={index}>{item.title}</CommandItem></Link>
+                 <Link href={`/Documentation/${item.id}`} > <CommandItem   key={index}>{item.brandName}</CommandItem></Link>
                 )}
               </CommandGroup>
               <CommandSeparator />
