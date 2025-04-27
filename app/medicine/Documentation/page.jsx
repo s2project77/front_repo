@@ -15,7 +15,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:4000/api/medicines/getAllMedicines");
+        const response = await fetch("http://192.168.124.229:4000/api/medicines/getAllMedicines");
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -63,7 +63,8 @@ const Page = () => {
   if (loading) {
     return (
       <Layout>
-        <div className="w-full min-h-screen flex justify-center items-center">
+        <div className="w-full min-h-screen  justify-center   grid grid-cols-1 sm:grid-cols-[1.1fr_4fr] items-center">
+          <Side_bar/>
           <div className="text-xl">Loading medicines...</div>
         </div>
       </Layout>
@@ -73,9 +74,12 @@ const Page = () => {
   if (error) {
     return (
       <Layout>
-        <div className="w-full min-h-screen flex justify-center items-center">
+        <div className="w-full min-h-screen  justify-center items-center  grid grid-cols-1 sm:grid-cols-[1.1fr_4fr]">
+        
+          <Side_bar/>
           <div className="text-xl text-red-500">Error: {error}</div>
         </div>
+        
       </Layout>
     );
   }
