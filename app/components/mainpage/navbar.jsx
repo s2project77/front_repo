@@ -4,11 +4,11 @@ import Image from 'next/image'
 const Navbar_data=[
     {id:1,name:"Home",link:"/"},
 
-    {id:2,name:"About",link:"/"},
+    {id:2,name:"About",link:"/pharmacy"},
 
     {id:3,name:"Documentation",link:"/Documentation"},
 
-    {id:4,name:"Help",link:"/"},
+    {id:4,name:"Help",link:"/pharmacy/#footer"},
 
 
 

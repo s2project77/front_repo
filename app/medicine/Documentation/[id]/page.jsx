@@ -1,8 +1,8 @@
 import React from 'react';
-import { Side_bar } from '@/app/components/mainpage/side_bar';
-import Layout from '@/app/components/mainpage_layout/layout';
+import { Side_bar } from '@/app/components/medicine/mainpage/sidebar';
+import Layout from '@/app/components/medcine_layout/layout';
 import Searchbar from '@/app/components/searchbar';
-import Image from 'next/image';
+import Image from 'next/image';;
 import Link from 'next/link';
 
 // In Next.js App Router, page files should export a React component as default
@@ -43,20 +43,20 @@ return(
  
           <div className=" rounded-lg shadow-lg border bg-gray-100 border-gray-200 p-6">
         <div className="flex items-center mb-6">
-         <div className="mr-4">
-                <Image  height={100} width={100}
-                      src={"/doliprane.jpg"} 
-                      alt={foundMedicine.brandName}
-                      className="w-24 h-24 object-contain rounded-lg"
-                    />
-                  </div>
+        <div className="mr-4">
+        <Image  height={100} width={100}
+              src={"/doliprane.jpg"} 
+              alt={foundMedicine.brandName}
+              className="w-24 h-24 object-contain rounded-lg"
+            />
+          </div>
           <div>
             <h2 className="text-xl font-semibold text-gray-800">{foundMedicine.brandName}</h2>
-           <Link href={"./"+id+"/"+foundMedicine.genericName}> <p className="text-gray-600">{foundMedicine.genericName}</p></Link>
+           <Link  href={"./"+id+"/"+foundMedicine.genericName} > <p className="text-gray-600">{foundMedicine.genericName}</p></Link>
           </div>
         </div>
         
-        <div className="border-t-4 border-t-green-500 border-gray-200 pt-4">
+        <div className="border-t-4 border-t-slate-500 border-gray-200 pt-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
             <span className="font-medium text-gray-700">Form:</span>
             <span className="col-span-2 text-gray-600">{foundMedicine.form}</span>

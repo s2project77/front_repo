@@ -1,5 +1,5 @@
 import Layout from "@/app/components/medcine_layout/layout";
-import { Side_bar } from "../../components/mainpage/side_bar";
+import { Side_bar } from "@/app/components/medicine/mainpage/sidebar";
 import Profile from "../../components/profile/Profile";
 
 const ProfilePage = () => {

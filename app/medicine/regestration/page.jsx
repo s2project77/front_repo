@@ -42,7 +42,7 @@ export default function Register() {
     
     try {
       // Fixed the duplicate "/api/" in the URL path
-      const response = await fetch('http://192.168.15.167:3001/api/doctors/signup', {
+      const response = await fetch('http://192.168.15.102:4000/api/doctors/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,6 +57,7 @@ export default function Register() {
         // Handle error - get the error message from the response
         const errorData = await response.json();
         setErrorMessage(errorData.message || 'Registration failed. Please try again.');
+        
         console.error("Registration failed:", errorData);
       }
     } catch (error) {

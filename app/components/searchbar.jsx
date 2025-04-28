@@ -23,7 +23,7 @@ export const Searchbar = ({ data }) => {
     <div className="w-[60%] relative">
       {/* Container with border + shadow */}
       <div
-        className="border border-gray-300 shadow-md rounded-md p-2 relative"
+        className="border border-gray-300 shadow-[16px]  rounded-md p-2 relative"
         onClick={handleShow}
       >
         {/* Bell icon absolutely positioned */}

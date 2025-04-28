@@ -85,7 +85,7 @@ export default function Register() {
     };
 
     try {
-      const response = await fetch("http://192.168.15.167:3001/api/pharmacies/signup", {
+      const response = await fetch("http://192.168.15.102:4000/api/pharmacies/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -105,7 +105,6 @@ export default function Register() {
       alert(`Registration failed: ${error.message}`);
     }
   };
-
   return (
     <>
       <Head>

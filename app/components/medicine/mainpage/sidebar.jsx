@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import ImageUploader from './input_file';
+import ImageUploader from '../../mainpage/input_file';
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const side_bar_data = [
-  { id: 1, name: "medicament documents", link: "/Documentation" ,icon: Database},
+  { id: 1, name: "medicament documents", link: "/medicine/Documentation" ,icon: Database},
   { id: 2, name: "Archive", link: "/" , icon: Archive},
   
   { id: 3, name: "profile", link: "/" ,icon: User},
@@ -77,9 +77,9 @@ export const Side_bar = ({ color = 'green' }) => {
           ) : (
             <ChevronRight onClick={handleShow2}></ChevronRight>
           )}
-          <Link href="../addmedicament"  className={`${linkClasses} flex hover:bg-white w-[100%] mb-1 cursor-pointer  flex-row`}>
+          <Link href="../medicine/patient"  className={`${linkClasses} flex hover:bg-white w-[100%] mb-1 cursor-pointer  flex-row`}>
             <PlusCircle className='pt-1'  size={20} />
-            <span className='pl-2 pb-1 '>add medicament</span>
+            <span className='pl-2 pb-1 '>add prespective</span>
           </Link>
         </div>
         {Show2 && (

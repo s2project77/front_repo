@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from '@/app/components/medcine_layout/layout'
 import { Middle_part } from '@/app/components/medicine/mainpage/middilpart'
 import { Right_part } from '@/app/components/medicine/mainpage/rightpart'
-import { Side_bar } from '@/app/components/mainpage/side_bar'
+import { Side_bar } from '@/app/components/medicine/mainpage/sidebar'
 const page1 = () => {
   return (
     <Layout>
