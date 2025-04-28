@@ -2,31 +2,50 @@
 // components/Navbar.jsx
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+const Navbar_data=[
+  {id:1,name:"Home",link:"/"},
+
+  {id:2,name:"About",link:"/medicine"},
+
+  {id:3,name:"Documentation",link:"/medicine/Documentation"},
+
+  {id:4,name:"Help",link:"/medicine/#footer"},
+
+
+
+]
 const Navbar = () => {
   return (
-    <header className="bg-gradient-to-r from-slate-50 to-slate-200  mt-3 mr-3 ml-3 shadow-lg backdrop-blur-3xl sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="w-10 h-10 bg-slate-600 rounded-full flex items-center justify-center text-white mr-2">
+    <header>
+        <div className='flex shadow-md  shadow-gray-300 bg-gray-100 relative top-2 mb-3 right-4 left-2 flex-row h-[2cm] justify-between   '>
+ <div className='w-[5cm]  justify-center items-center text-center flex mx-auto    ' >
+ <div className="w-10 h-10 bg-slate-500 rounded-full flex items-center justify-center text-white mr-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
             </svg>
           </div>
-        <Link  href={"/medicine"}>  <span className="text-xl font-bold text-slate-800">MediFind</span></Link>
-        </div>
-        
-        <nav className="hidden md:flex space-x-8">
-          <Link href="#regester" className="text-gray-700 hover:text-slate-600 transition">Help</Link>
-          <Link href="#footer" className="text-gray-700 hover:text-slate-600 transition">Contact</Link>
-          <Link href="../mainpage" className="text-gray-700 hover:text-slate-600 transition">Get started</Link>
-          <Link href="#" className="text-gray-700 hover:text-slate-600 transition">about Us</Link>
-          <Link href="#section" className="text-gray-700 hover:text-slate-600 transition"> Services</Link>
-        </nav>
-        
-        <div className="flex space-x-4 items-center">
-          <Link href={"/profile"} className='flex items-center justify-center' >  profile  </Link>
-        </div>
-      </div>
+        <Link href={"/"} >  <span className="text-xl font-bold text-slate-700">MediFind</span>
+        </Link>
+ </div>
+
+ <nav className='flex-1 justify-center items-center text-center sm:flex  hidden   ' >
+ <ul className='flex flex-row gap-8'>
+{Navbar_data.map((data)=>
+
+    <li  key={data.id}>
+        <Link className='text-lg hover:text-blue-500' href={data.link}>{data.name}</Link>
+    </li>
+
+
+)}
+</ul>
+
+ </nav>
+ <div className='w-[6cm] justify-center items-center mx-auto text-center flex flex-row gap-4  ' ><Link href={"/medicine/mainpage"}>your profile</Link>
+ <div className='w-[66px] h-[66px]  rounded-[50px]  border-2 justify-center' ><Image  src={"/profile.png"} width={50} height={50} alt='' className='justify-center mx-auto mt-1'  ></Image> </div></div>
+
+ </div>
     </header>
   );
 };

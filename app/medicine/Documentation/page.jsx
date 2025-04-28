@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Layout from '@/app/components/medcine_layout/layout';
-import { Side_bar } from '@/app/components/mainpage/side_bar';
+import { Side_bar } from '@/app/components/medicine/mainpage/sidebar';
 import Searchbar from '@/app/components/searchbar';
-
+import Link from 'next/link';
 const Page = () => {
   const [fetchedData, setFetchedData] = useState([]);
   const [visible, setVisible] = useState([]);
@@ -15,7 +15,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://192.168.124.229:4000/api/medicines/getAllMedicines");
+        const response = await fetch("http://192.168.15.102:4000/api/medicines/getAllMedicines");
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -45,8 +45,7 @@ const Page = () => {
     const start = nextPageNum * 9;
     const end = start + 9;
     
-    if (start >= fetchedData.length) return; // Don't go beyond available data
-    
+    if (start >= fetchedData.length) return; 
     setPage(nextPageNum);
     setVisible(fetchedData.slice(start, end));
   };
@@ -65,7 +64,7 @@ const Page = () => {
       <Layout>
         <div className="w-full min-h-screen  justify-center   grid grid-cols-1 sm:grid-cols-[1.1fr_4fr] items-center">
           <Side_bar/>
-          <div className="text-xl">Loading medicines...</div>
+          <div className="text-xl flex items-center justify-center ">Loading medicines...</div>
         </div>
       </Layout>
     );
@@ -98,17 +97,17 @@ const Page = () => {
             </h1>
           </div>
           
-          <div className="flex items-center justify-center">
-            <Searchbar data={fetchedData} />
+          <div className="flex z-50 items-center justify-center">
+            <Searchbar   data={fetchedData} />
           </div>
           
           {visible.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl mx-auto">
                 {visible.map((item,_) => (
-                  <div 
+                 <Link href={"./Documentation/"+item.id} > <div 
                     key={item._id}
-                    className="bg-white h-60 flex flex-col justify-between p-4 shadow-md border border-green-200 rounded-lg transition-all duration-300 hover:shadow-lg hover:border-green-400"
+                    className="bg-white h-60 flex flex-col justify-between p-4 shadow-md border-[2px] border-slate-300  rounded-lg transition-all duration-300 hover:shadow-2xl hover:border-blue-300"
                   > 
                     <div>
                       <p className="text-lg font-bold text-gray-800">{item.brandName}</p>
@@ -117,7 +116,7 @@ const Page = () => {
                     </div>
                     <p className="text-sm text-gray-600 mt-2 line-clamp-3">{item.description}</p>
                    
-                  </div>
+                  </div></Link>
                 ))}
               </div>
 

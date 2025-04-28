@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Layout from '@/app/components/medcine_layout/layout';
 import Head from 'next/head';
-import { Side_bar } from '@/app/components/mainpage/side_bar';
+import { Side_bar } from '@/app/components/medicine/mainpage/sidebar';
 export default function MedicalChat() {
   const [message, setMessage] = useState('');
   const [medications, setMedications] = useState([

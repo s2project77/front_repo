@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/mainpage_layout/layout';
 import { Side_bar } from '../components/mainpage/side_bar';
 import Searchbar from '@/app/components/searchbar';
-
+import Link from 'next/link';
 const Page = () => {
   const [fetchedData, setFetchedData] = useState([]);
   const [visible, setVisible] = useState([]);
@@ -15,7 +15,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://192.168.124.229:4000/api/medicines/getAllMedicines");
+        const response = await fetch("http://192.168.15.102:4000/api/medicines/getAllMedicines");
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -96,17 +96,17 @@ const Page = () => {
             </h1>
           </div>
           
-          <div className="flex items-center justify-center">
-            <Searchbar data={fetchedData} />
+          <div className="flex items-center  justify-center">
+            <Searchbar  data={fetchedData} />
           </div>
           
           {visible.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl mx-auto">
                 {visible.map((item,_) => (
-                  <div 
-                    key={item._id}
-                    className="bg-white h-60 flex flex-col justify-between p-4 shadow-md border border-green-200 rounded-lg transition-all duration-300 hover:shadow-lg hover:border-green-400"
+                 <Link href={"./Documentation/"+item.id}  key={item._id}><div 
+                   
+                    className="bg-white h-60  hover:shadow-2xl flex flex-col justify-between p-4  border border-green-200 rounded-lg transition-all duration-300 shadow-lg hover:border-green-400"
                   > 
                     <div>
                       <p className="text-lg font-bold text-gray-800">{item.brandName}</p>
@@ -115,7 +115,7 @@ const Page = () => {
                     </div>
                     <p className="text-sm text-gray-600 mt-2 line-clamp-3">{item.description}</p>
                    
-                  </div>
+                  </div></Link>
                 ))}
               </div>
 
