@@ -85,21 +85,22 @@ export default function Register() {
     };
 
     try {
-      const response = await fetch("http://192.168.15.102:4000/api/pharmacies/signup", {
+      const response = await fetch("http://192.168.124.229:4000/api/pharmacies/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-        credentials: "include"
-      });
+        credentials: "include",
 
+      });
+       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || "Registration failed");
       }
-
       const data = await response.json();
       console.log("Registration success:", data);
       setCurrentStep(3);
+      
     } catch (error) {
       console.error("Submission error:", error);
       alert(`Registration failed: ${error.message}`);

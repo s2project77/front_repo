@@ -15,7 +15,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://192.168.15.102:4000/api/medicines/getAllMedicines");
+        const response = await fetch("http://192.168.124.229:4000/api/medicines/getAllMedicines");
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

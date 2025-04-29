@@ -29,7 +29,7 @@ export default function Page() {
 
     try {
       // Replace with your actual API endpoint when available
-      const apiUrl = "/api/login"; // This will be replaced later
+      const apiUrl = "http://192.168.124.229:4000/api/doctors/login"; // This will be replaced later
       
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -219,7 +219,7 @@ export default function Page() {
             </p>
 
             <Link
-              href="/home"
+              href="./mainpage"
               className="inline-block bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium"
             >
               Go to Main Page

@@ -19,7 +19,7 @@ const Page = ({params}) => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetch("http://192.168.15.102:4000/api/medicines/getFamilies");
+                const response = await fetch("http://192.168.124.229:4000/api/medicines/getFamilies");
                 const data = await response.json();
                 
                 if (data.status === "success" && data.data && data.data.families) {
