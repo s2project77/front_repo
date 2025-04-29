@@ -10,9 +10,7 @@ import Link from 'next/link';
 export default async function MedicineDetailPage({ params }) {
   const { id } = params;
   
-  // Fetch all medicines
-  
-    const medicineRes = await fetch("http://192.168.15.102:4000/api/medicines/getAllMedicines", {
+    const medicineRes = await fetch("http://192.168.124.229:4000/api/medicines/getAllMedicines", {
       cache: 'no-store' // Ensures fresh data on each request
     });
     

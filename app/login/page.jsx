@@ -26,7 +26,7 @@ export default function LoginPage() {
     }
     
     try {
-      const response = await fetch("http://192.168.15.167:3001/api/pharmacies/login", {
+      const response = await fetch("http://192.168.124.229:4000/api/pharmacies/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -43,7 +43,9 @@ export default function LoginPage() {
 
       const data = await response.json();
       console.log("Server response:", data);
-      setCurrentStep(3); // Move to success page after successful login
+      setCurrentStep(3); 
+      
+      console.log(data.token)
     } catch (error) {
       console.error("Error submitting form:", error);
       alert(`Failed to login: ${error.message}`);
@@ -54,11 +56,11 @@ export default function LoginPage() {
     <section className='flex min-h-screen overflow-hidden'>
       <div className='md:w-2/5 text-black p-5 flex-col min-h-screen h-full md:flex hidden bg-gradient-to-b from-green-900 to-green-800'>
         <div className='flex flex-col p-1'>
-          <h1 className='flex font-bold text-white'>PHARMANET</h1>
-          <div className='text-white'>
-            <Link href="/registration" className='gap-4 font-bold inline-flex items-center'>
-              <FaArrowLeft/>back to web site
-            </Link>
+      <h1 className='flex font-bold text-white'>PHARMANET</h1>
+    <div className='text-white'>
+   <Link href="/registration" className='gap-4 font-bold inline-flex items-center'>
+     <FaArrowLeft/>back to web site
+     </Link>
           </div>
         </div>
         

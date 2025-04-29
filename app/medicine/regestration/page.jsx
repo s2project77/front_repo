@@ -17,7 +17,6 @@ export default function Register() {
     password: "",
     confirmPassword: "",
     agreeToTerms: false,
-    photo: "", // Keeping this for future file upload implementation
   });
 
   const nextStep = () => {
@@ -41,8 +40,7 @@ export default function Register() {
     setErrorMessage("");
     
     try {
-      // Fixed the duplicate "/api/" in the URL path
-      const response = await fetch('http://192.168.15.102:4000/api/doctors/signup', {
+      const response = await fetch('http://192.168.124.229:4000/api/doctors/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,11 +48,10 @@ export default function Register() {
         body: JSON.stringify(formDataRegistration),
         credentials: "include"
       });
-      
+      console.log(token)
       if (response.ok) {
         setCurrentStep(3); // Move to success page only after successful API call
       } else {
-        // Handle error - get the error message from the response
         const errorData = await response.json();
         setErrorMessage(errorData.message || 'Registration failed. Please try again.');
         
@@ -123,7 +120,7 @@ export default function Register() {
               <p className="text-gray-600">
                 Already have an account?{" "}
                 <Link
-                  href="/login"
+                  href="./login"
                   className="text-blue-600 font-medium hover:underline"
                 >
                   Log In
@@ -371,7 +368,7 @@ export default function Register() {
                   </p>
 
                   <Link
-                    href="/mainpage"
+                    href="./mainpage"
                     className="inline-block bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium"
                   >
                     Go to Main Page
