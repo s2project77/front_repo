@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import  search from "../../search.svg"
-export const Middle_part = ({ themeColor = 'slate' }) => {
+export const Middle_part = ({ themeColor = 'slate' , userData}) => {
   const textTheme = `text-${themeColor}-400`;
   const bgTheme = `bg-${themeColor}-100`;
   const borderTheme = `border-${themeColor}-300`;
@@ -47,10 +47,10 @@ export const Middle_part = ({ themeColor = 'slate' }) => {
         <div className="flex relative w-full h-full flex-col gap-4 flex-1">
           <div className="grid w-full ml-4 grid-cols-2 gap-5">
             <span className="flex flex-row gap-2">
-              First name: <p>Lachoub</p>
+              First name: <p>{userData?.Firstname || 'Unknown'}</p>
             </span>
             <span className="flex flex-row gap-2">
-              Last Name: <p>Zineddine</p>
+              Last Name: <p>{userData?.Lastname || 'Unknown'}</p>
             </span>
           </div>
 

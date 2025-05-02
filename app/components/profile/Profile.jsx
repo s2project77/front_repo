@@ -5,39 +5,24 @@ import { Bell, Pencil } from "lucide-react";
 import Image from "next/image";
 import EditProfile from "./EditProfile";
 
-export default function Profile({ color }) {
-  const initialData = {
-    name: "Green Life Pharmacy",
-    location: "123 Main Street, Casablanca",
-    userId: "PH-20240321",
-    owner: {
-      firstName: "Ahmed",
-      lastName: "El Khattabi",
-    },
-    agreementNumber: "PH-AG-2024-987654",
-    contact: {
-      phone: "+212 600 123 456",
-      fax: "+212 522 654",
-    },
-    image: null, // Add image field
-  };
-
+export default function Profile({ color = "blue", userData }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [originalData, setOriginalData] = useState(initialData);
-  const [pharmacyData, setPharmacyData] = useState(initialData);
+  const [doctorData, setDoctorData] = useState(userData || {});
 
+  // Handle nested property updates safely
   const handleChange = (propertyPath, value) => {
-    setPharmacyData((prevState) => {
-      const updatedData = structuredClone(prevState); 
+    setDoctorData(prev => {
       const keys = propertyPath.split(".");
-      let current = updatedData;
+      const newData = { ...prev };
+      let current = newData;
 
-      keys.slice(0, -1).forEach((key) => {
-        current = current[key];
-      });
+      for (let i = 0; i < keys.length - 1; i++) {
+        current[keys[i]] = { ...current[keys[i]] };
+        current = current[keys[i]];
+      }
 
       current[keys[keys.length - 1]] = value;
-      return updatedData;
+      return newData;
     });
   };
 
@@ -46,65 +31,65 @@ export default function Profile({ color }) {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPharmacyData((prevState) => ({
-          ...prevState,
-          image: reader.result, // Store image as base64
-        }));
+        setPharmacyData(prev => ({ ...prev, image: reader.result }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleCancel = () => {
-    setPharmacyData(originalData); 
-    setIsEditing(false);
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
   };
 
-  const handleEdit = () => {
-    if (pharmacyData !== originalData) {
-      setOriginalData(structuredClone(pharmacyData));
-    }
-    setIsEditing(true);
+  const colorClasses = {
+    blue: {
+      text: "text-blue-800",
+      button: "bg-blue-100 hover:bg-blue-500",
+      icon: "text-blue-800",
+    },
+    green: {
+      text: "text-green-800",
+      button: "bg-green-100 hover:bg-green-500",
+      icon: "text-green-800",
+    },
   };
 
-  // Map color prop to background
-  const bgColorMap = {
-    blue: "bg-blue-200",
-    green: "bg-green-200",
-    red: "bg-red-200",
-    // Add more colors as needed
-  };
-
-
+  const currentColor = colorClasses[color] || colorClasses.blue;
 
   return (
-    <div className={`flex flex-col p-8 gap-8`}>
+    <div className="flex flex-col p-8 gap-8">
+      {/* Notification Bell */}
       <button className="self-end">
         <Bell color={color} size="36" />
       </button>
+
+      {/* Header */}
       <div className="flex gap-2 items-center">
         <Image src="/profile2.svg" alt="profile" width="30" height="30" />
-        <h3 className={`text-${color}-800 text-xl font-semibold`}>
-          {isEditing ? `Edit Profile (${color.charAt(0).toUpperCase() + color.slice(1)})` : `Profile (${color.charAt(0).toUpperCase() + color.slice(1)})`}
+        <h3 className={`${currentColor.text} text-xl font-semibold`}>
+          {isEditing ? "Edit Profile" : "Profile Information"}
         </h3>
       </div>
 
+      {/* Main Content */}
       {isEditing ? (
         <EditProfile
-          pharmacyData={pharmacyData}
+          doctorData={doctorData}
           onClick={() => setIsEditing(false)}
-          onCancel={handleCancel}
+          onCancel={() => setIsEditing(false)}
           onChange={handleChange}
           onImageUpload={handleImageUpload}
           color={color}
         />
       ) : (
-        <ProfileInfoCard color={color} pharmacyData={pharmacyData} />
+        <ProfileInfoCard color={color} userData={doctorData} />
       )}
 
-      <button 
-        onClick={handleEdit} 
-        className={`bg-${color}-100 w-fit py-2 px-6 rounded-lg shadow-lg text-gray-500 self-end hover:bg-${color}-500 hover:text-white`}>
+      {/* Edit Button */}
+      <button
+        onClick={handleEditToggle}
+        className={`${currentColor.button} w-fit py-2 px-6 rounded-lg shadow-lg text-gray-500 self-end hover:text-white`}
+      >
         <div className="flex gap-4 items-center">
           <p>Edit</p>
           <Pencil />

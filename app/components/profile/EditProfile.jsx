@@ -2,7 +2,7 @@
 import React from "react";
 
 export default function EditProfile({
-  pharmacyData,
+  doctorData,
   onChange,
   onImageUpload,
   onClick,
@@ -33,7 +33,7 @@ export default function EditProfile({
   const handleSubmit = (e) => {
     e.preventDefault();
     // Save changes (e.g., call an API)
-    console.log("Updated Data:", pharmacyData);
+    console.log("Updated Data:", doctorData);
     onClick();
   };
 
@@ -51,10 +51,10 @@ export default function EditProfile({
 
         <div className="flex items-center space-x-4">
           {/* Profile Image Preview */}
-          {pharmacyData.image ? (
+          {doctorData.image ? (
             <div className="relative">
               <img
-                src={pharmacyData.image}
+                src={doctorData.image}
                 alt="Preview"
                 className="w-40 h-40 object-cover rounded-md shadow-lg border border-gray-300"
               />
@@ -90,7 +90,7 @@ export default function EditProfile({
       <input
         id="pharmacyName"
         type="text"
-        value={pharmacyData?.name || ""}
+        value={doctorData?.name || ""}
         onChange={(e) => onChange("name", e.target.value)}
         className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
@@ -101,7 +101,7 @@ export default function EditProfile({
       <input
         id="location"
         type="text"
-        value={pharmacyData?.location || ""}
+        value={doctorData?.location || ""}
         onChange={(e) => onChange("location", e.target.value)}
         className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
@@ -112,7 +112,7 @@ export default function EditProfile({
       <input
         id="firstName"
         type="text"
-        value={pharmacyData?.owner?.firstName || ""}
+        value={doctorData?.FirstName || ""}
         onChange={(e) => onChange("owner.firstName", e.target.value)}
         className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
@@ -123,7 +123,7 @@ export default function EditProfile({
       <input
         id="lastName"
         type="text"
-        value={pharmacyData?.owner?.lastName || ""}
+        value={doctorData?.LastName || ""}
         onChange={(e) => onChange("owner.lastName", e.target.value)}
         className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
@@ -134,7 +134,7 @@ export default function EditProfile({
       <input
         id="phone"
         type="text"
-        value={pharmacyData?.contact?.phone || ""}
+        value={doctorData?.phone || ""}
         onChange={(e) => onChange("contact.phone", e.target.value)}
         className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />
@@ -145,7 +145,7 @@ export default function EditProfile({
       <input
         id="fax"
         type="text"
-        value={pharmacyData?.contact?.fax || ""}
+        value={doctorData?.contact?.fax || ""}
         onChange={(e) => onChange("contact.fax", e.target.value)}
         className={`p-2 border rounded-md w-full mb-4 ${focusRingClasses} transition-all`}
       />

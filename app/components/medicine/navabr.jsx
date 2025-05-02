@@ -15,7 +15,7 @@ const Navbar_data=[
 
 
 ]
-const Navbar = () => {
+const Navbar = ({userData}) => {
   return (
     <header>
         <div className='flex shadow-md  shadow-gray-300 bg-gray-100 relative top-2 mb-3 right-4 left-2 flex-row h-[2cm] justify-between   '>
@@ -42,7 +42,7 @@ const Navbar = () => {
 </ul>
 
  </nav>
- <div className='w-[6cm] justify-center items-center mx-auto text-center flex flex-row gap-4  ' ><Link href={"/medicine/mainpage"}>your profile</Link>
+        <div className='w-[6cm] justify-center items-center mx-auto text-center flex flex-row gap-4  ' ><Link href={"/medicine/profile"}>{userData.Firstname} { userData.Lastname}</Link>
  <div className='w-[66px] h-[66px]  rounded-[50px]  border-2 justify-center' ><Image  src={"/profile.png"} width={50} height={50} alt='' className='justify-center mx-auto mt-1'  ></Image> </div></div>
 
  </div>

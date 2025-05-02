@@ -1,11 +1,13 @@
-import Navbar from "../medicine/navabr";
-const Layout=({ children })=> {
+import React from 'react';
+import Navbar from '../medicine/navabr';
+
+const Layout = ({ children, userData }) => {
   return (
-    <div className='min-h-screen  bg-white   overflow-hidden '>
-        <Navbar/>
-        
-       
-        {children}</div>
-  )
-}
+    <div className='min-h-screen overflow-hidden'>
+      {userData ? <Navbar userData={userData} /> : null}
+      {children}
+    </div>
+  );
+};
+
 export default Layout;

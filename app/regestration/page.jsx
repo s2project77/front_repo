@@ -85,7 +85,7 @@ export default function Register() {
     };
 
     try {
-      const response = await fetch("http://192.168.124.229:4000/api/pharmacies/signup", {
+      const response = await fetch("http://192.168.108.88:4000/api/pharmacies/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -98,6 +98,9 @@ export default function Register() {
         throw new Error(errorData.message || "Registration failed");
       }
       const data = await response.json();
+      if (data?.token) {
+        localStorage.setItem("token", data.token); // أو استخدم context
+      }
       console.log("Registration success:", data);
       setCurrentStep(3);
       

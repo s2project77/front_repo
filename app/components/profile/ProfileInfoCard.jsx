@@ -2,16 +2,15 @@
 import Image from "next/image";
 import React from "react";
 
-export default function ProfileInfoCard({ pharmacyData, color }) {
+export default function ProfileInfoCard({ userData, color }) {
   const bgColorMap = {
     blue: "bg-blue-200",
     green: "bg-green-200",
-    // add more if needed
   };
 
   const background = bgColorMap[color] || "bg-gray-200";
 
-  if (!pharmacyData) {
+  if (!userData) {
     return (
       <div className={`flex p-8 rounded-lg shadow-lg animate-pulse ${background}`}>
         <div className="w-4/6 space-y-6">
@@ -42,36 +41,28 @@ export default function ProfileInfoCard({ pharmacyData, color }) {
       <div className="w-full md:w-4/6 space-y-4 md:space-y-6">
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-center">
           <Image
-            src={pharmacyData.image || "/profile2.svg"}
+            src={userData.image || "/profile2.svg"}
             alt="profile"
             width="150"
             height="150"
-            className="bg-white"
+            className="bg-white rounded-full"
           />
           <div className="space-y-2 text-lg text-center md:text-left">
-            <h4 className="font-semibold text-xl">{pharmacyData.name}</h4>
-            <p>{pharmacyData.location}</p>
-            <p>User Reference ID: {pharmacyData.userId}</p>
+            <h4 className="font-semibold text-xl">{userData.name}</h4>
+            <p>{userData.location || "Unknown location"}</p>
+            <p>User Reference ID: {userData.referenceId || "N/A"}</p>
           </div>
         </div>
+
         <div className="flex flex-col md:flex-row justify-between gap-4">
-          <p>
-            First Name : <span>{pharmacyData.owner?.firstName || "N/A"}</span>
-          </p>
-          <p>
-            Last Name : <span>{pharmacyData.owner?.lastName || "N/A"}</span>
-          </p>
+          <p>email : <span>{userData.email || "N/A"}</span></p>
         </div>
-        <p>
-          Pharm Agreement Number : <span>{pharmacyData.agreementNumber || "N/A"}</span>
-        </p>
+
+        <p>Pharm Agreement Number : <span>{userData.agreementNumber || "N/A"}</span></p>
+
         <div className="flex flex-col md:flex-row justify-between gap-4">
-          <p>
-            Phone number : <span>{pharmacyData.contact?.phone || "N/A"}</span>
-          </p>
-          <p>
-            Fax : <span>{pharmacyData.contact?.fax || "N/A"}</span>
-          </p>
+          <p>Phone number : <span>{userData.phone || "N/A"}</span></p>
+          <p>Fax : <span>{userData.contact?.fax || "N/A"}</span></p>
         </div>
       </div>
     </div>
