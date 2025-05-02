@@ -1,60 +1,54 @@
 "use client";
-import { Database, Archive, User,MapPin, PlusCircle } from 'lucide-react';
+import { Database, Archive, User, MapPin, PlusCircle, LogOut, ChevronDown, ChevronRight } from 'lucide-react';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { useRouter } from "next/navigation";
 import ImageUploader from './input_file';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarHeader,
-} from "@/components/ui/sidebar";
 
 const side_bar_data = [
-  { id: 1, name: "medicament documents", link: "/Documentation" ,icon: Database},
-  { id: 2, name: "Archive", link: "/" , icon: Archive},
-  
-  { id: 3, name: "profile", link: "/" ,icon: User},
+  { id: 1, name: "medicament documents", link: "/Documentation", icon: Database },
+  { id: 2, name: "Archive", link: "/", icon: Archive },
+  { id: 3, name: "profile", link: "/profile", icon: User },
 ];
 
 export const Side_bar = ({ color = 'green' }) => {
   const [Show, setShow] = useState(true);
-  const handleShow = () => setShow(true);
-  const handledisapear = () => setShow(false);
   const [Show2, setShow2] = useState(true);
-  const handleShow2 = () => setShow2(true);
-  const handledisapear2 = () => setShow2(false);
+  const router = useRouter();
 
-  // Define dynamic color classes
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    router.push("/pharmacy");
+  };
+
   const bgColorMap = {
     blue: "bg-slate-100",
     green: "bg-gray-100",
   };
 
   const linkColorMap = {
-    blue: "text-slate-700 ",
-    green: "text-black ",
+    blue: "text-slate-700",
+    green: "text-black",
   };
 
-  const background = bgColorMap[color] || "bg-gray-100"; // Default to gray if no color is passed
-  const linkClasses = linkColorMap[color] || "text-gree-700 hover:text-green-100"; // Default to green links
+  const background = bgColorMap[color] || "bg-gray-100";
+  const linkClasses = linkColorMap[color] || "text-green-700 hover:text-green-100";
 
   return (
-    <div className={`font-bold text-black shadow-lg min-h-screen relative shadow-gray-300   flex flex-col gap-4 top-0 left-0  bottom-0 h-full py-7 text-left px-auto rounded-2xl ${background}`}>
-     {/* Location Section */}
-     <div className='flex flex-col relative mx-auto w-[90%] gap-3'>
+    <div className={`font-bold text-black shadow-lg min-h-screen relative shadow-gray-300 flex flex-col gap-4 py-7 text-left px-auto rounded-2xl ${background}`}>
+      
+      {/* Location Section */}
+      <div className='flex flex-col relative mx-auto w-[90%] gap-3'>
         <div className='flex flex-row gap-2 items-center'>
           {Show ? (
-            <ChevronDown className='cursor-pointer' onClick={handledisapear}></ChevronDown>
+            <ChevronDown className='cursor-pointer' onClick={() => setShow(false)} />
           ) : (
-            <ChevronRight onClick={handleShow}></ChevronRight>
+            <ChevronRight className='cursor-pointer' onClick={() => setShow(true)} />
           )}
-          <div className='flex hover:bg-white w-[100%] p-1 cursor-pointer items-center gap-2'>
+          <div className='flex hover:bg-white w-full p-1 cursor-pointer items-center gap-2'>
             <MapPin size={20} />
-            <h1 >your location</h1>
+            <h1>your location</h1>
           </div>
         </div>
         {Show && (
@@ -68,18 +62,17 @@ export const Side_bar = ({ color = 'green' }) => {
         )}
       </div>
 
-
-     
+      {/* Add Medicament Section */}
       <div className='w-[90%] mx-auto'>
-        <div className='flex   flex-row gap-2 items-center'>
+        <div className='flex flex-row gap-2 items-center'>
           {Show2 ? (
-            <ChevronDown className='cursor-pointer' onClick={handledisapear2}></ChevronDown>
+            <ChevronDown className='cursor-pointer' onClick={() => setShow2(false)} />
           ) : (
-            <ChevronRight onClick={handleShow2}></ChevronRight>
+            <ChevronRight className='cursor-pointer' onClick={() => setShow2(true)} />
           )}
-          <Link href="../addmedicament"  className={`${linkClasses} flex hover:bg-white w-[100%] mb-1 cursor-pointer  flex-row`}>
-            <PlusCircle className='pt-1'  size={20} />
-            <span className='pl-2 pb-1 '>add medicament</span>
+          <Link href="/addmedicament" className={`${linkClasses} flex hover:bg-white w-full mb-1 cursor-pointer flex-row`}>
+            <PlusCircle className='pt-1' size={20} />
+            <span className='pl-2 pb-1'>add medicament</span>
           </Link>
         </div>
         {Show2 && (
@@ -89,21 +82,32 @@ export const Side_bar = ({ color = 'green' }) => {
         )}
       </div>
 
+      {/* Sidebar Navigation */}
+      <div className='flex mx-auto w-[90%]'>
+        <ul className='flex flex-col gap-3 w-full'>
+          {side_bar_data.map((data) => (
+            <li className='hover:bg-white w-full p-1' key={data.id}>
+              <Link href={data.link} className={linkClasses}>
+                <span className="inline-flex items-center">
+                  {data.icon && <data.icon size={20} />}
+                  <span className="ml-2">{data.name}</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <div className='flex mx-auto w-[90%] relative'>
-      <ul className='flex flex-col gap-3 w-full relative'>
-        {side_bar_data.map((data) => (
-          <li className='hover:bg-white w-[100%] p-1' key={data.id}>
-            <Link href={data.link} className={linkClasses}>
-              <span className="inline-flex items-center">
-                {data.icon && <data.icon size={20} />}
-                <span className="ml-2">{data.name}</span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+      {/* Logout Button */}
+      <div className="p-4 border-t mt-auto">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-2 text-red-500 hover:bg-red-100 px-4 py-2 rounded"
+        >
+          <LogOut size={18} />
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,14 +1,13 @@
-import React, { Children } from 'react'
-import Navbar from '../mainpage/navbar'
-import { Right_part } from '../mainpage/right_part'
-import { Side_bar } from '../mainpage/side_bar'
-const Layout=({ children })=> {
+import React from 'react';
+import Navbar from '../mainpage/navbar';
+
+const Layout = ({ children, userData }) => {
   return (
-    <div className='min-h-screen    overflow-hidden '>
-        <Navbar/>
-        
-       
-        {children}</div>
-  )
-}
+    <div className='min-h-screen overflow-hidden'>
+      {userData ? <Navbar userData={userData} /> : null}
+      {children}
+    </div>
+  );
+};
+
 export default Layout;

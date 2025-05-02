@@ -38,9 +38,9 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
-    
+  
     try {
-      const response = await fetch('http://192.168.124.229:4000/api/doctors/signup', {
+      const response = await fetch('http://192.168.108.88:4000/api/doctors/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,20 +48,27 @@ export default function Register() {
         body: JSON.stringify(formDataRegistration),
         credentials: "include"
       });
-      console.log(token)
+  
+      const data = await response.json();
+  
       if (response.ok) {
-        setCurrentStep(3); // Move to success page only after successful API call
+        // 👇 احفظ التوكن في localStorage
+        if (data.token) {
+          console.log("Token saved to localStorage:", data);
+          localStorage.setItem("token", data.token);
+        }
+  
+        setCurrentStep(3);
       } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || 'Registration failed. Please try again.');
-        
-        console.error("Registration failed:", errorData);
+        setErrorMessage(data.message || 'Registration failed. Please try again.');
+        console.error("Registration failed:", data);
       }
     } catch (error) {
       setErrorMessage('Network error. Please check your connection and try again.');
       console.error("Registration failed:", error);
     }
   };
+  
 
   return (
     <>

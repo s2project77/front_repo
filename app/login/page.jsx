@@ -26,7 +26,7 @@ export default function LoginPage() {
     }
     
     try {
-      const response = await fetch("http://192.168.124.229:4000/api/pharmacies/login", {
+      const response = await fetch("http://192.168.108.88:4000/api/pharmacies/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -35,23 +35,28 @@ export default function LoginPage() {
         }),
         credentials: "include"
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Login failed");
       }
-
+  
       const data = await response.json();
       console.log("Server response:", data);
-      setCurrentStep(3); 
-      
-      console.log(data.token)
+  
+      // ✅ Save token to localStorage
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        console.log("Token saved to localStorage:", data.token);
+      }
+  
+      setCurrentStep(3); // Go to success screen
+  
     } catch (error) {
       console.error("Error submitting form:", error);
       alert(`Failed to login: ${error.message}`);
     }
   };
-
   return (
     <section className='flex min-h-screen overflow-hidden'>
       <div className='md:w-2/5 text-black p-5 flex-col min-h-screen h-full md:flex hidden bg-gradient-to-b from-green-900 to-green-800'>
