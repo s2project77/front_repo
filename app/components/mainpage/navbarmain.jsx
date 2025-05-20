@@ -1,52 +1,164 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-const Navbar_data=[
-    {id:1,name:"Home",link:"/mainpage"},
+import { Menu, X, User, ChevronDown } from 'lucide-react'
 
-    {id:2,name:"About",link:"/"},
-
-    {id:3,name:"Documentation",link:"/Documentation"},
-
-    {id:4,name:"Help",link:"/"},
-    {id:5,name:"log out",link:"/login"}
-
-
-
-
+const Navbar_data = [
+  {id: 1, name: "Home", link: "/mainpage"},
+  {id: 2, name: "About", link: "/"},
+  {id: 3, name: "Documentation", link: "/Documentation"},
+  {id: 4, name: "Help", link: "/"},
+  {id: 5, name: "Log out", link: "/login"}
 ]
+
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeItem, setActiveItem] = useState(1)
+  
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-    return (
-    <header>
-        <div className='flex shadow-md relative top-2 mb-4 right-4 left-2 flex-row h-[2cm] justify-between  bg-gradient-to-r from-white to-gray-100 text-gray-500 '>
- <div className='w-[5cm]  justify-center items-center text-center flex mx-auto    ' >
- <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white mr-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
+  return (
+    <header className="sticky top-0 z-50">
+      <div 
+        className={`
+          flex relative px-4 md:px-6 lg:px-8 flex-row h-16 md:h-20 items-center justify-between
+          transition-all duration-300 ease-in-out
+          ${scrolled 
+            ? 'bg-white shadow-lg' 
+            : 'bg-gradient-to-r from-white to-gray-50 shadow-md'}
+        `}
+      >
+        {/* Logo Section */}
+        <div className="flex items-center">
+          <div className="relative group cursor-pointer">
+            <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white 
+                  transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+              
+              {/* Decorative pulse effect */}
+              <span className="absolute top-0 right-0 h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+            </div>
+            
+            <Link href="/mainpage" className="ml-2">
+              <span className="text-xl font-bold text-green-800 transition-colors duration-300 hover:text-green-600">
+                MediFind
+                <span className="text-green-500 text-xs font-normal ml-1 align-top">+</span>
+              </span>
+            </Link>
           </div>
-          <Link href={"/mainpage"}> <span  className="text-xl font-bold text-green-800">MediFind</span></Link>
+        </div>
 
- </div>
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden flex items-center text-gray-500 hover:text-green-600 transition-colors"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
 
- <nav className='flex-1 justify-center items-center text-center sm:flex  hidden   ' >
- <ul className='flex flex-row gap-8'>
-{Navbar_data.map((data)=>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex flex-1 justify-center items-center">
+          <ul className="flex flex-row gap-1 lg:gap-4">
+            {Navbar_data.map((item) => (
+              <li key={item.id} className="relative">
+                <Link 
+                  href={item.link}
+                  className={`
+                    relative px-3 py-2 rounded-md text-base font-medium transition-all duration-200
+                    hover:text-green-600 hover:bg-green-50
+                    ${activeItem === item.id 
+                      ? 'text-green-600 font-semibold' 
+                      : 'text-gray-600'}
+                  `}
+                  onClick={() => setActiveItem(item.id)}
+                >
+                  {item.name}
+                  
+                  {/* Active indicator */}
+                  {activeItem === item.id && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-green-500 transform origin-left"></span>
+                  )}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-    <li  key={data.id}>
-        <Link className='text-lg hover:text-emerald-500' href={data.link}>{data.name}</Link>
-    </li>
+        {/* Profile Section */}
+        <div className="flex items-center space-x-4">
+          <div className="hidden sm:flex items-center">
+            <Link 
+              href="/"
+              className="text-gray-600 hover:text-green-600 font-medium flex items-center mr-2 transition-colors duration-200"
+            >
+              <User size={16} className="mr-1" />
+              <span className="hidden lg:inline">Your Profile</span>
+              <ChevronDown size={14} className="ml-1" />
+            </Link>
+          </div>
+          
+          <div className="relative group">
+            <div className="w-10 h-10 rounded-full border-2 border-gray-200 overflow-hidden transition-all duration-300 group-hover:border-green-400 group-hover:shadow-md">
+              <Image 
+                src="/profile.png" 
+                width={50} 
+                height={50} 
+                alt="User profile picture" 
+                className="object-cover"
+              />
+            </div>
+            
+            {/* Status indicator */}
+            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 border-2 border-white"></span>
+          </div>
+        </div>
+      </div>
 
-
-)}
-</ul>
-
- </nav>
- <div className='w-[6cm] justify-center items-center mx-auto text-center flex flex-row gap-4  ' ><Link href={"/"}>your profile</Link>
- <div className='w-[66px] h-[66px]  rounded-[50px]  border-2 justify-center' ><Image  src={"/profile.png"} width={50} height={50} alt='' className='justify-center mx-auto mt-1'  ></Image> </div></div>
-
- </div>
+      {/* Mobile Navigation Menu - Slide Down Panel */}
+      <div 
+        className={`
+          md:hidden absolute w-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out origin-top
+          ${mobileMenuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
+        `}
+      >
+        <nav className="px-4 pt-2 pb-4">
+          <ul className="space-y-2">
+            {Navbar_data.map((item) => (
+              <li key={item.id}>
+                <Link 
+                  href={item.link}
+                  className={`
+                    block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200
+                    hover:bg-green-50 hover:text-green-600
+                    ${activeItem === item.id ? 'text-green-600 bg-green-50' : 'text-gray-600'}
+                  `}
+                  onClick={() => {
+                    setActiveItem(item.id)
+                    setMobileMenuOpen(false)
+                  }}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
     </header>
   )
 }

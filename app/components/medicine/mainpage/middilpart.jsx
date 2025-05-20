@@ -7,7 +7,7 @@ export const Middle_part = ({ themeColor = 'slate' , userData}) => {
   const borderTheme = `border-${themeColor}-300`;
 
   return (
-    <div className="min-h-screen border shadow-md  p-3 m-4   bg-gray-100 rounded-lg max-h-screen flex flex-col gap-3 pt-6 relative items-center">
+    <div className="min-h-screen border shadow-md  p-3 m-4  mt-2  bg-gray-100 rounded-lg max-h-screen flex flex-col gap-3 pt-6 relative items-center">
       {/* Search Box */}
       <div className="w-[85%]  rounded-xl flex flex-row relative justify-center items-center h-[2cm] mx-auto">
         <span className="text-2xl text-blue-500 absolute left-8">   <Image  src={search} className='pt-2 pl-2'  width={30} height={20} alt='0'   ></Image></span>
