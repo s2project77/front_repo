@@ -11,9 +11,6 @@ const Navbar_data = [
   {id: 4, name: "Help", link: "/medicine/#footer"},
   {id: 5, name: "Log out", link: "/login"}
 ]
-<<<<<<< HEAD
-const Navbar = ({userData}) => {
-=======
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -30,7 +27,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
->>>>>>> 9b55ceb (static data)
+
   return (
     <header className="sticky top-0 z-50">
       <div 
@@ -133,16 +130,7 @@ export default function Navbar() {
         </div>
       </div>
 
-<<<<<<< HEAD
-)}
-</ul>
 
- </nav>
-        <div className='w-[6cm] justify-center items-center mx-auto text-center flex flex-row gap-4  ' ><Link href={"/medicine/profile"}>{userData.Firstname} { userData.Lastname}</Link>
- <div className='w-[66px] h-[66px]  rounded-[50px]  border-2 justify-center' ><Image  src={"/profile.png"} width={50} height={50} alt='' className='justify-center mx-auto mt-1'  ></Image> </div></div>
-
- </div>
-=======
       {/* Mobile Navigation Menu - Slide Down Panel */}
       <div 
         className={`
@@ -173,7 +161,7 @@ export default function Navbar() {
           </ul>
         </nav>
       </div>
->>>>>>> 9b55ceb (static data)
+
     </header>
   )
 }

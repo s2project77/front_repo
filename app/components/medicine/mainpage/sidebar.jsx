@@ -1,9 +1,7 @@
 "use client";
-<<<<<<< HEAD
-import { Database, Archive, User, MapPin, PlusCircle, LogOut, ChevronDown, ChevronRight } from 'lucide-react';
-=======
+
 import { Database, Archive, User, MapPin, PlusCircle, Pill } from 'lucide-react';
->>>>>>> 9b55ceb (static data)
+
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,25 +30,13 @@ export const Side_bar = ({ color = 'green' }) => {
   };
 
   const background = bgColorMap[color] || "bg-gray-100";
-<<<<<<< HEAD
-  const linkClasses = linkColorMap[color] || "text-green-700 hover:text-green-100";
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/");
-  };
-
-  return (
-    <div className={`font-bold text-black shadow-lg min-h-screen relative shadow-gray-300 flex flex-col gap-4 py-7 text-left px-auto rounded-2xl ${background}`}>
-      
-      {/* Location Section */}
-=======
   const linkClasses = linkColorMap[color] || "text-gree-700 hover:text-green-100";
 
   return (
     <div className={`font-bold text-black shadow-lg min-h-screen relative shadow-gray-300 mt-2 flex flex-col gap-4 top-0 left-0 bottom-0 h-full py-7 text-left px-auto rounded-2xl ${background}`}>
       {/* Medicine Location Section */}
->>>>>>> 9b55ceb (static data)
+
       <div className='flex flex-col relative mx-auto w-[90%] gap-3'>
         <div className='flex flex-row gap-2 items-center'>
           {Show ? (
@@ -58,15 +44,11 @@ export const Side_bar = ({ color = 'green' }) => {
           ) : (
             <ChevronRight className='cursor-pointer' onClick={() => setShow(true)} />
           )}
-<<<<<<< HEAD
-          <div className='flex hover:bg-white w-full p-1 cursor-pointer items-center gap-2'>
-            <MapPin size={20} />
-            <h1>your location</h1>
-=======
+
           <div className='flex hover:bg-white w-[100%] p-1 cursor-pointer items-center gap-2'>
             <Pill size={20} />
             <h1>Pharmacy Network</h1>
->>>>>>> 9b55ceb (static data)
+
           </div>
         </div>
         {Show && (
@@ -103,10 +85,7 @@ export const Side_bar = ({ color = 'green' }) => {
         )}
       </div>
 
-<<<<<<< HEAD
-      {/* Add Prespective Section */}
-=======
->>>>>>> 9b55ceb (static data)
+
       <div className='w-[90%] mx-auto'>
         <div className='flex flex-row gap-2 items-center'>
           {Show2 ? (
@@ -114,11 +93,9 @@ export const Side_bar = ({ color = 'green' }) => {
           ) : (
             <ChevronRight className='cursor-pointer' onClick={() => setShow2(true)} />
           )}
-<<<<<<< HEAD
-          <Link href="/medicine/patient" className={`${linkClasses} flex hover:bg-white w-full mb-1 cursor-pointer flex-row`}>
-=======
+
           <Link href="../medicine/patient" className={`${linkClasses} flex hover:bg-white w-[100%] mb-1 cursor-pointer flex-row`}>
->>>>>>> 9b55ceb (static data)
+
             <PlusCircle className='pt-1' size={20} />
             <span className='pl-2 pb-1'>add prespective</span>
           </Link>
@@ -130,18 +107,12 @@ export const Side_bar = ({ color = 'green' }) => {
         )}
       </div>
 
-<<<<<<< HEAD
-      {/* Sidebar Navigation */}
-      <div className='flex mx-auto w-[90%]'>
-        <ul className='flex flex-col gap-3 w-full'>
-          {side_bar_data.map((data) => (
-            <li className='hover:bg-white w-full p-1' key={data.id}>
-=======
+
       <div className='flex mx-auto w-[90%] relative'>
         <ul className='flex flex-col gap-3 w-full relative'>
           {side_bar_data.map((data) => (
             <li className='hover:bg-white w-[100%] p-1' key={data.id}>
->>>>>>> 9b55ceb (static data)
+
               <Link href={data.link} className={linkClasses}>
                 <span className="inline-flex items-center">
                   {data.icon && <data.icon size={20} />}
@@ -152,21 +123,7 @@ export const Side_bar = ({ color = 'green' }) => {
           ))}
         </ul>
       </div>
-<<<<<<< HEAD
 
-      {/* Logout Button */}
-      <div className="mt-auto w-[90%] mx-auto border-t pt-4">
-        <Link
-          href="/"
-          onClick={handleLogout}
-          className="w-full flex items-center gap-2 text-red-500 hover:bg-red-100 px-4 py-2 rounded"
-        >
-          <LogOut size={18} />
-          Logout
-        </Link>
-      </div>
-=======
->>>>>>> 9b55ceb (static data)
     </div>
   );
 };
