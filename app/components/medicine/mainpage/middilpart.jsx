@@ -1,90 +1,61 @@
 import React from 'react';
 import Image from 'next/image';
-import  search from "../../search.svg"
-export const Middle_part = ({ themeColor = 'slate' , userData}) => {
+import clsx from 'clsx';
+import search from "../../search.svg"
+
+export const Middle_part = ({ themeColor = 'slate', userData, phone = '0661895757', fax = '046572729' }) => {
   const textTheme = `text-${themeColor}-400`;
   const bgTheme = `bg-${themeColor}-100`;
   const borderTheme = `border-${themeColor}-300`;
 
   return (
-    <div className="min-h-screen border shadow-md  p-3 m-4   bg-gray-100 rounded-lg max-h-screen flex flex-col gap-3 pt-6 relative items-center">
+    <div className="min-h-screen p-4 md:p-6 m-4 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md flex flex-col gap-6 items-center">
       {/* Search Box */}
-      <div className="w-[85%]  rounded-xl flex flex-row relative justify-center items-center h-[2cm] mx-auto">
-        <span className="text-2xl text-blue-500 absolute left-8">   <Image  src={search} className='pt-2 pl-2'  width={30} height={20} alt='0'   ></Image></span>
+      <div className="w-full md:w-[85%] rounded-xl flex relative items-center h-[3.5rem]">
+        <span className="absolute left-4">
+          <Image src={search} width={25} height={25} alt="search icon" />
+        </span>
         <input
           type="text"
-          className="w-[86%] shadow-md h-[68%] mt-2 ml-3 pl-10 py-3 border-gray-300 border rounded-xl"
           placeholder="Search For Medicament"
+          className="w-full pl-12 pr-4 py-2 rounded-xl border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:text-white"
         />
-        <span className="pr-3 font-bold text-2xl justify-center mb-2 h-6 w-10 text-yellow-500">
-      
-        </span>
       </div>
 
       {/* Info Box */}
-      <div
-        className={`w-[85%] ${bgTheme} ${borderTheme} border shadow-xl   shadow-gray-300 rounded-xl flex bg-white flex-col gap-2 relative h-[7cm] mx-auto mt-3`}
-      >
-        <div className="flex flex-row gap-2 flex-1">
-          <div className="relative h-full w-[40%]">
+      <div className={clsx("w-full md:w-[85%] rounded-xl shadow-xl border flex flex-col gap-4 p-4", bgTheme, borderTheme, "dark:bg-gray-800 dark:border-gray-700")}>
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="relative w-full md:w-[40%] h-48 md:h-auto">
             <Image
               src="/map.jpg"
-              width={100}
-              height={100}
-              alt="s"
-              className="w-full h-full object-cover"
+              layout="fill"
+              objectFit="cover"
+              alt="map"
+              className="rounded-lg"
             />
           </div>
-          <div className="w-full h-full">
-            <ul className="flex flex-col justify-center h-full">
-              <li className="text-left">Pharmacie name</li>
-              <li className="text-left">Location</li>
-              <li className="text-left">User reference: DZ-19</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="flex relative w-full h-full flex-col gap-4 flex-1">
-          <div className="grid w-full ml-4 grid-cols-2 gap-5">
-            <span className="flex flex-row gap-2">
-              First name: <p>{userData?.Firstname || 'Unknown'}</p>
-            </span>
-            <span className="flex flex-row gap-2">
-              Last Name: <p>{userData?.Lastname || 'Unknown'}</p>
-            </span>
-          </div>
-
-          <div className="w-full ml-4">
-            <span className="flex-row flex">
-              Pharm agreement number: <p>167771717</p>
-            </span>
-          </div>
-
-          <div className="grid ml-4 w-full grid-cols-2">
-            <span className="flex flex-row">
-              Phone number: <p>0661895757</p>
-            </span>
-            <span className="flex flex-row">
-              FAX: <p>value to fetch</p>
-            </span>
+          <div className="flex-1 flex flex-col justify-center gap-2 text-sm md:text-base dark:text-white">
+            <p><strong>First name:</strong> {userData?.Firstname || 'Unknown'}</p>
+            <p><strong>Last name:</strong> {userData?.Lastname || 'Unknown'}</p>
+            <p><strong>Phone number:</strong> {phone}</p>
+            <p><strong>FAX:</strong> {fax}</p>
           </div>
         </div>
       </div>
 
       {/* Info Prompt */}
-      <div className="w-[85%] rounded-xl h-[3cm] flex flex-col border shadow-lg  bg-white gap-3 justify-center mx-auto mt-3">
-        <span className={`text-2xl mx-2 font-bold text-slate-700 `}>
-          Improve your website
-        </span>
-        <p className="mx-3">
-          Adding a new medicament or information will improve your website so do not miss it. and enjoy
+      <div className="w-full md:w-[85%] bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg">
+        <h2 className="text-xl font-bold text-slate-700 dark:text-white">Improve your website</h2>
+        <p className="text-slate-600 dark:text-gray-300">
+          Adding a new medicament or information will improve your website — don’t miss out!
         </p>
       </div>
 
-      {/* CTA Button (red kept as requested) */}
-      <div className="w-[85%] rounded-xl relative justify-center items-center h-[1cm] mx-auto">
-        <button className="w-[65%] flex text-slate-900         bg-slate-400 border shadow-lg  p-5  items-center content-center text-center  mx-auto justify-center  h-full rounded-xl font-bold text-1xl  hover:text-white mt-2 hover:bg-slate-700">
-            <span  className='mr-10' > <Image src={"./../add-icon-svgrepo-com.svg"}  width={20} height={20} alt=' 4d'  ></Image> </span>  Add information about your medicament
+      {/* CTA Button */}
+      <div className="w-full md:w-[85%]">
+        <button className="w-full md:w-[65%] flex items-center justify-center gap-4 h-12 mx-auto bg-slate-400 hover:bg-slate-700 text-slate-900 hover:text-white dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white font-bold rounded-xl shadow-md transition">
+          <Image src="/add-icon-svgrepo-com.svg" width={20} height={20} alt="add icon" />
+          Add information about your medicament
         </button>
       </div>
     </div>

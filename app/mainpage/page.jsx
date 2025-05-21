@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '@/app/components/mainpage_layout/layout';
 import { Middle_part } from '@/app/components/mainpage/middle_part';
 import { Right_part } from '@/app/components/mainpage/right_part';
-import { Side_bar } from '@/app/components/mainpage/side_bar';
+import { Side_bar } from '@/app/components/medicine/mainpage/sidebar';
 import { useRouter } from 'next/navigation';
 
 const Page1 = () => {
@@ -21,7 +21,7 @@ const Page1 = () => {
       }
 
       try {
-        const response = await fetch('http://192.168.108.88:4000/api/pharmacies/myinfo', {
+        const response = await fetch('http://192.168.103.88:3001/api/pharmacies/myinfo', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

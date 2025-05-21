@@ -8,7 +8,7 @@ export default function ProfileInfoCard({ userData, color }) {
     green: "bg-green-200",
   };
 
-  const background = bgColorMap[color] || "bg-gray-200";
+  const background = bgColorMap[color] || "bg-green-200";
 
   if (!userData) {
     return (

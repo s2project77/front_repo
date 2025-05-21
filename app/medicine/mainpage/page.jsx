@@ -16,7 +16,7 @@ const Page1 = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://192.168.108.88:4000/api/doctors/myinfo',{
+        const response = await fetch('http://192.168.103.88:3001/api/doctors/myinfo',{
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
