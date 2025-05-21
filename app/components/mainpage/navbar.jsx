@@ -43,8 +43,8 @@ export default function Navbar({ userData }) {
         {/* User Info */}
         <div className='w-[6cm] justify-center items-center mx-auto text-center flex flex-row gap-4'>
         <Link href={userData ? "/profile" : "/login"}>
-  {userData?.Firstname
-    ? `${userData.Firstname} ${userData.Lastname || ""}`
+  {userData?.name
+    ? `${userData.name || ""}`
     : "Login"}
 </Link>
           <div className='w-[66px] h-[66px] rounded-[50px] border-2 justify-center'>

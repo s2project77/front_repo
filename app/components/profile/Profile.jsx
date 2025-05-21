@@ -5,7 +5,7 @@ import { Bell, Pencil } from "lucide-react";
 import Image from "next/image";
 import EditProfile from "./EditProfile";
 
-export default function Profile({ color = "blue", userData }) {
+export default function Profile({ color = "green", userData }) {
   const [isEditing, setIsEditing] = useState(false);
   const [doctorData, setDoctorData] = useState(userData || {});
 

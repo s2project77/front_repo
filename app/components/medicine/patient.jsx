@@ -25,12 +25,14 @@ const PatientCard = ({ patient }) => {
       <div className="p-6 flex items-start space-x-4">
         <div className="relative w-16 h-16 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden">
           {avatar ? (
-            <Image 
-              src={avatar} 
-              alt={`${name}'s avatar`}
-              fill
-              className="object-cover"
-            />
+          <div className="relative w-16 h-16 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden">
+  <Image 
+    src={"/profile.png"} 
+    alt={`${name}'s avatar`}
+    fill
+    className="object-cover"
+  />
+</div>
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-400">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">

@@ -40,7 +40,7 @@ export default function Register() {
     setErrorMessage("");
   
     try {
-      const response = await fetch('http://192.168.108.88:4000/api/doctors/signup', {
+      const response = await fetch('http://192.168.103.88:4000/api/doctors/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

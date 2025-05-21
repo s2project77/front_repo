@@ -26,14 +26,14 @@ export default function LoginPage() {
     }
     
     try {
-      const response = await fetch("http://192.168.108.88:4000/api/pharmacies/login", {
+      const response = await fetch("http://192.168.103.88:3001/api/pharmacies/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
         }),
-        credentials: "include"
+        // credentials: "include"
       });
   
       if (!response.ok) {
@@ -53,8 +53,7 @@ export default function LoginPage() {
       setCurrentStep(3); // Go to success screen
   
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert(`Failed to login: ${error.message}`);
+      console.error("Error submitting form:", error); 
     }
   };
   return (

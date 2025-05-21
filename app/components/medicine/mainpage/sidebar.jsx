@@ -10,6 +10,8 @@ const side_bar_data = [
   { id: 1, name: "medicament documents", link: "/medicine/Documentation", icon: Database },
   { id: 2, name: "Archive", link: "/", icon: Archive },
   { id: 3, name: "profile", link: "/", icon: User },
+  { id: 4, name: "patients", link: "/patient" },
+  { id: 5, name: "add prespective", link: "/medicine/patient", icon: PlusCircle },
 ];
 
 export const Side_bar = ({ color = 'green' }) => {
@@ -38,29 +40,6 @@ export const Side_bar = ({ color = 'green' }) => {
   return (
     <div className={`font-bold text-black shadow-lg min-h-screen relative shadow-gray-300 flex flex-col gap-4 py-7 text-left px-auto rounded-2xl ${background}`}>
       
-      {/* Location Section */}
-      <div className='flex flex-col relative mx-auto w-[90%] gap-3'>
-        <div className='flex flex-row gap-2 items-center'>
-          {Show ? (
-            <ChevronDown className='cursor-pointer' onClick={() => setShow(false)} />
-          ) : (
-            <ChevronRight className='cursor-pointer' onClick={() => setShow(true)} />
-          )}
-          <div className='flex hover:bg-white w-full p-1 cursor-pointer items-center gap-2'>
-            <MapPin size={20} />
-            <h1>your location</h1>
-          </div>
-        </div>
-        {Show && (
-          <Image
-            src={"/map.jpg"}
-            className='w-full object-cover h-full'
-            width={100}
-            height={100}
-            alt='your location'
-          />
-        )}
-      </div>
 
       {/* Add Prespective Section */}
       <div className='w-[90%] mx-auto'>
