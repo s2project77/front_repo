@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 const side_bar_data = [
   { id: 1, name: "medicament documents", link: "/medicine/Documentation", icon: Database },
   { id: 2, name: "Archive", link: "/", icon: Archive },
-  { id: 3, name: "profile", link: "/", icon: User },
+  { id: 3, name: "profile", link: "/medicine/profile", icon: User },
   { id: 4, name: "patients", link: "/patient" },
   { id: 5, name: "add prespective", link: "/medicine/patient", icon: PlusCircle },
 ];
