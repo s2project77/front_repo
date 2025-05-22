@@ -19,7 +19,7 @@ const ProfilePage = () => {
           return;
         }
 
-        const res = await fetch("http://192.168.108.88:4000/api/doctors/myinfo", {
+        const res = await fetch("http://192.168.103.88:3001/api/doctors/myinfo", {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`,
