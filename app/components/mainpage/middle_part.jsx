@@ -1,104 +1,117 @@
+// Enhanced Middle Part Component
+"use client";
 import React from "react";
 import Image from "next/image";
-import search from "../search.svg";
-export const Middle_part = ({ themeColor = "green", userData }) => {
-  const textTheme = `text-${themeColor}-600`;
-  const bgTheme = `bg-${themeColor}-100`;
-  const borderTheme = `border-${themeColor}-300`;
+import { Search, MapPin, Phone, Mail, FileText, Plus, Sparkles } from "lucide-react";
 
+export const Middle_part = ({ themeColor = "emerald", userData }) => {
   return (
-    <div className="min-h-screen border shadow-md   p-3 m-2 mx-3  bg-gray-100 rounded-lg max-h-screen flex flex-col gap-3 pt-6 relative items-center">
-      {/* Search Box */}
-      <div className="w-[85%]  rounded-xl flex flex-row relative justify-center items-center h-[2cm] mx-auto">
-        <span className="text-2xl text-blue-500 absolute left-8">
-          {" "}
-          <Image
-            src={search}
-            className="pt-2 pl-2"
-            width={30}
-            height={20}
-            alt="0"
-          ></Image>
-        </span>
-        <input
-          type="text"
-          className="w-[86%] shadow-md h-[68%] mt-2 ml-3 pl-10 py-3 border-gray-300 border rounded-xl"
-          placeholder="Search For Medicament"
-        />
-        <span className="pr-3 font-bold text-2xl justify-center mb-2 h-6 w-10 text-yellow-500"></span>
-      </div>
-
-      {/* Info Box */}
-      <div
-        className={`w-[85%] ${bgTheme} ${borderTheme} border shadow-xl   shadow-gray-300 rounded-xl flex bg-white flex-col gap-2 relative h-[7cm] mx-auto mt-3`}
-      >
-        <div className="flex flex-row gap-2 flex-1">
-          <div className="relative h-full w-[40%]">
-            <Image
-              src="/map.jpg"
-              width={100}
-              height={100}
-              alt="s"
-              className="w-full h-full object-cover"
+    <div className="min-h-screen p-6 space-y-6 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Modern Search Box */}
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
+        <div className="relative bg-white backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl shadow-emerald-500/10 p-1">
+          <div className="flex items-center space-x-4 px-4 py-3">
+            <Search className="text-emerald-500 flex-shrink-0" size={20} />
+            <input
+              type="text"
+              className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-400 text-lg"
+              placeholder="Search for medications..."
             />
-          </div>
-          <div className="w-full h-full">
-            <ul className="flex flex-col justify-center h-full">
-              <li className="text-left">{ userData.name}</li>
-              <li className="text-left">{userData.location}</li>
-              <li className="text-left">User reference: DZ-19</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="flex relative w-full h-full flex-col gap-4 flex-1">
-          <div className="grid w-full ml-4 grid-cols-2 gap-5">
-            <span className="flex flex-row gap-2">
-              email: <p>{userData?.email || "Unknown"}</p>
-            </span>
-          </div>
-
-          <div className="w-full ml-4">
-            <span className="flex-row flex">
-              Pharm agreement number: <p></p>
-            </span>
-          </div>
-
-          <div className="grid ml-4 w-full grid-cols-2">
-            <span className="flex flex-row">
-              Phone number: <p>{ userData.phone}</p>
-            </span>
-            <span className="flex flex-row">
-              FAX: <p>value to fetch</p>
-            </span>
+            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-2 rounded-xl font-medium hover:shadow-lg transition-all duration-300 cursor-pointer">
+              Search
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Info Prompt */}
-      <div className="w-[85%] rounded-xl h-[3cm] flex flex-col border shadow-lg  bg-white gap-3 justify-center mx-auto mt-3">
-        <span className={`text-2xl mx-2 font-bold ${textTheme}`}>
-          Improve your website
-        </span>
-        <p className="mx-3">
-          Adding a new medicament or information will improve your website so do
-          not miss it. and enjoy
-        </p>
+      {/* Enhanced User Info Card */}
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl blur opacity-10 group-hover:opacity-20 transition-opacity"></div>
+        <div className="relative bg-white backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl shadow-emerald-500/10 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+          
+          <div className="p-8">
+            <div className="flex items-start space-x-6 mb-6">
+              <div className="relative w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0">
+                <Image
+                  src="/map.jpg"
+                  width={96}
+                  height={96}
+                  alt="Location"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
+              
+              <div className="flex-1 space-y-3">
+                <div className="flex items-center space-x-2">
+                  <h2 className="text-2xl font-bold text-gray-900">{userData?.name || "Pharmacy Name"}</h2>
+                  <div className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium">
+                    DZ-19
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <MapPin size={16} />
+                  <span>{userData?.location || "Location"}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl">
+                  <Mail className="text-emerald-500" size={18} />
+                  <span className="text-gray-700">{userData?.email || "email@example.com"}</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl">
+                  <Phone className="text-emerald-500" size={18} />
+                  <span className="text-gray-700">{userData?.phone || "+1234567890"}</span>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl">
+                  <FileText className="text-emerald-500" size={18} />
+                  <span className="text-gray-700">Agreement: PHM-2024</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl">
+                  <FileText className="text-emerald-500" size={18} />
+                  <span className="text-gray-700">FAX: +1234567891</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* CTA Button (red kept as requested) */}
-      <div className="w-[85%] rounded-xl relative justify-center items-center h-[1cm] mx-auto">
-        <button className="w-[65%] flex text-slate-700         bg-green-200 shadow-lg  p-5  items-center content-center text-center  mx-auto justify-center  h-full rounded-xl font-bold text-1xl  mt-2 hover:bg-green-400">
-          <span className="mr-10">
-            {" "}
-            <Image
-              src={"add-icon-svgrepo-com.svg"}
-              width={20}
-              height={20}
-              alt=" 4d"
-            ></Image>{" "}
-          </span>{" "}
-          Add information about your medicament
+      {/* Modern Info Prompt */}
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-10 group-hover:opacity-20 transition-opacity"></div>
+        <div className="relative bg-white backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl shadow-purple-500/10 p-6">
+          <div className="flex items-start space-x-4">
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-xl">
+              <Sparkles className="text-white" size={24} />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Enhance Your Digital Presence</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Keep your medication database updated to provide better service to your patients. 
+                Fresh information helps build trust and improves accessibility.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Enhanced CTA Button */}
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
+        <button className="relative w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-4 px-8 rounded-2xl shadow-xl shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-[1.02] transform">
+          <div className="flex items-center justify-center space-x-3">
+            <Plus size={20} />
+            <span className="text-lg">Add Medication Information</span>
+          </div>
         </button>
       </div>
     </div>

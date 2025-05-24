@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Layout from '@/app/components/medcine_layout/layout';
-import { Side_bar } from '@/app/components/medicine/mainpage/sidebar';
+import  Side_bar from '@/app/components/medicine/mainpage/sidebar';
 import Searchbar from '@/app/components/searchbar';
 import Link from 'next/link';
 const Page = () => {
@@ -15,7 +15,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://192.168.25.88:4000/api/medicines/getAllMedicines");
+        const response = await fetch("http://192.168.103.88:3001/api/medicines/getAllMedicines");
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
