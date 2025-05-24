@@ -1,111 +1,131 @@
 "use client";
-import { Database, Archive, User, MapPin, PlusCircle, LogOut, ChevronDown, ChevronRight } from 'lucide-react';
+import {
+  Database,
+  Archive,
+  User,
+  MapPin,
+  PlusCircle,
+  LogOut,
+  ChevronDown,
+  ChevronRight,
+  Home,
+  Settings
+} from 'lucide-react';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import ImageUploader from './input_file';
 
 const side_bar_data = [
-  { id: 1, name: "medicament documents", link: "/Documentation", icon: Database },
-  { id: 2, name: "Archive", link: "/", icon: Archive },
-  { id: 3, name: "profile", link: "/profile", icon: User },
+  { id: 1, name: "Dashboard", link: "/mainpage", icon: Home },
+  { id: 2, name: "Medications", link: "/Documentation", icon: Database },
+  { id: 3, name: "Archive", link: "/archive", icon: Archive },
+  { id: 4, name: "Profile", link: "/profile", icon: User },
+  { id: 5, name: "Settings", link: "/settings", icon: Settings },
 ];
 
-export const Side_bar = ({ color = 'green' }) => {
-  const [Show, setShow] = useState(true);
-  const [Show2, setShow2] = useState(true);
+export const Side_bar = ({ color = 'emerald' }) => {
+  const [showLocation, setShowLocation] = useState(true);
+  const [showUploader, setShowUploader] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
     router.push("/pharmacy");
   };
 
-  const bgColorMap = {
-    blue: "bg-slate-100",
-    green: "bg-gray-100",
-  };
-
-  const linkColorMap = {
-    blue: "text-slate-700",
-    green: "text-black",
-  };
-
-  const background = bgColorMap[color] || "bg-gray-100";
-  const linkClasses = linkColorMap[color] || "text-green-700 hover:text-green-100";
-
   return (
-    <div className={`font-bold text-black shadow-lg min-h-screen relative shadow-gray-300 flex flex-col gap-4 py-7 text-left px-auto rounded-2xl ${background}`}>
+    <div className="h-screen bg-white/80 backdrop-blur-xl border-r border-white/20 shadow-xl shadow-emerald-500/5 flex flex-col">
       
-      {/* Location Section */}
-      <div className='flex flex-col relative mx-auto w-[90%] gap-3'>
-        <div className='flex flex-row gap-2 items-center'>
-          {Show ? (
-            <ChevronDown className='cursor-pointer' onClick={() => setShow(false)} />
-          ) : (
-            <ChevronRight className='cursor-pointer' onClick={() => setShow(true)} />
-          )}
-          <div className='flex hover:bg-white w-full p-1 cursor-pointer items-center gap-2'>
-            <MapPin size={20} />
-            <h1>your location</h1>
+      {/* Header */}
+      <div className="p-6 border-b border-gray-100">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center text-white">
+            <Database size={20} />
+          </div>
+          <div>
+            <h2 className="font-bold text-gray-900">Pharmacy Hub</h2>
+            <p className="text-sm text-gray-500">Management System</p>
           </div>
         </div>
-        {Show && (
-          <Image
-            src={"/map.jpg"}
-            className='w-full object-cover h-full'
-            width={100}
-            height={100}
-            alt='your location'
-          />
+      </div>
+
+      {/* Navigation */}
+      <div className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+        {side_bar_data.map((item) => {
+          const isActive = pathname.startsWith(item.link);
+          return (
+            <Link
+              key={item.id}
+              href={item.link}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
+                isActive
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25'
+                  : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-600'
+              }`}
+            >
+              <item.icon size={20} />
+              <span className="font-medium">{item.name}</span>
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Location Section */}
+      <div className="px-4 py-4 border-t border-gray-100">
+        <button
+          onClick={() => setShowLocation(!showLocation)}
+          className="flex items-center justify-between w-full p-3 rounded-xl hover:bg-gray-50 transition-colors"
+        >
+          <div className="flex items-center space-x-3">
+            <MapPin size={20} className="text-emerald-500" />
+            <span className="font-medium text-gray-700">Location</span>
+          </div>
+          {showLocation ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+        </button>
+        
+        {showLocation && (
+          <div className="mt-3 rounded-xl overflow-hidden">
+            <Image
+              src="/map.jpg"
+              width={200}
+              height={120}
+              alt="Location"
+              className="w-full h-24 object-cover"
+            />
+          </div>
         )}
       </div>
 
-      {/* Add Medicament Section */}
-      <div className='w-[90%] mx-auto'>
-        <div className='flex flex-row gap-2 items-center'>
-          {Show2 ? (
-            <ChevronDown className='cursor-pointer' onClick={() => setShow2(false)} />
-          ) : (
-            <ChevronRight className='cursor-pointer' onClick={() => setShow2(true)} />
-          )}
-          <Link href="/addmedicament" className={`${linkClasses} flex hover:bg-white w-full mb-1 cursor-pointer flex-row`}>
-            <PlusCircle className='pt-1' size={20} />
-            <span className='pl-2 pb-1'>add medicament</span>
-          </Link>
-        </div>
-        {Show2 && (
-          <div className='border border-gray-300 py-5 rounded-xl'>
+      {/* Add Medication Section */}
+      <div className="px-4 py-4 border-t border-gray-100">
+        <button
+          onClick={() => setShowUploader(!showUploader)}
+          className="flex items-center justify-between w-full p-3 rounded-xl hover:bg-emerald-50 transition-colors text-emerald-600"
+        >
+          <div className="flex items-center space-x-3">
+            <PlusCircle size={20} />
+            <span className="font-medium">Quick Add</span>
+          </div>
+          {showUploader ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+        </button>
+        
+        {showUploader && (
+          <div className="mt-3 p-4 bg-gray-50 rounded-xl">
             <ImageUploader />
           </div>
         )}
       </div>
 
-      {/* Sidebar Navigation */}
-      <div className='flex mx-auto w-[90%]'>
-        <ul className='flex flex-col gap-3 w-full'>
-          {side_bar_data.map((data) => (
-            <li className='hover:bg-white w-full p-1' key={data.id}>
-              <Link href={data.link} className={linkClasses}>
-                <span className="inline-flex items-center">
-                  {data.icon && <data.icon size={20} />}
-                  <span className="ml-2">{data.name}</span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Logout Button */}
-      <div className="p-4 border-t mt-auto">
+      {/* Logout */}
+      <div className="p-4 border-t border-gray-100">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-2 text-red-500 hover:bg-red-100 px-4 py-2 rounded"
+          className="flex items-center space-x-3 w-full p-3 text-red-500 hover:bg-red-50 rounded-xl transition-colors"
         >
-          <LogOut size={18} />
-          Logout
+          <LogOut size={20} />
+          <span className="font-medium">Logout</span>
         </button>
       </div>
     </div>

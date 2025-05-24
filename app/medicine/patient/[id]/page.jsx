@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Layout from "@/app/components/medcine_layout/layout";
-import { Side_bar } from "@/app/components/medicine/mainpage/sidebar";
+import Side_bar from "@/app/components/medicine/mainpage/sidebar";
 import Head from "next/head";
-
+import { MessageSquare, Send, X, Plus, Loader2, Search, Phone, Mail, ClipboardList, User } from "lucide-react";
 export default function MedicalChatPage() {
   const { id: patientId } = useParams();
   const [allMedicines, setAllMedicines] = useState([]);
@@ -68,23 +68,104 @@ export default function MedicalChatPage() {
     fetchMedicines();
   }, []);
 
-  if (loading) return <div className="p-10">Loading patient data...</div>;
-  if (error) return <div className="p-10 text-red-500">Error: {error}</div>;
-  if (!patient) return <div className="p-10">No patient data found.</div>;
+const LoadingScreen = () => (
+  <Layout>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center">
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-20 animate-pulse"></div>
+        <div className="relative bg-white/80 backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl shadow-blue-500/10 p-12 text-center">
+          <div className="mb-6">
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 animate-bounce">
+              <Loader2 className="animate-spin" size={32} />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Loading Patient Page</h2>
+            <p className="text-gray-600">Fetching your patient records...</p>
+          </div>
+          <div className="flex justify-center space-x-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Layout>
+);
+
+const ErrorScreen = () => (
+  <Layout>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50 flex items-center justify-center p-4">
+      <div className="relative max-w-md w-full">
+        <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-pink-600 rounded-3xl blur opacity-20"></div>
+        <div className="relative bg-white/80 backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl shadow-red-500/10 p-8 text-center">
+          <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
+            <AlertCircle size={32} />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Medical Data Unavailable</h2>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <div className="flex items-center justify-center space-x-2 mb-6 p-3 bg-gray-50 rounded-xl">
+            {isOnline ? (
+              <>
+                <Wifi className="text-green-500" size={20} />
+                <span className="text-green-600 font-medium">Online</span>
+              </>
+            ) : (
+              <>
+                <WifiOff className="text-red-500" size={20} />
+                <span className="text-red-600 font-medium">Offline</span>
+              </>
+            )}
+          </div>
+          <button
+            onClick={handleRetry}
+            disabled={!isOnline}
+            className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition-all duration-300 hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+          >
+            <RefreshCw size={18} />
+            <span>{retryCount > 0 ? `Retry (${retryCount})` : 'Try Again'}</span>
+          </button>
+          {retryCount > 2 && (
+            <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+              <p className="text-amber-700 text-sm">
+                Unable to connect to medical records system. Please check your connection or contact technical support.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </Layout>
+);
+
+if (loading) {
+  return <LoadingScreen />;
+}
+
+if (error) {
+  return <ErrorScreen />;
+}
+  
+  if (!patient) return (
+    <div className="flex items-center justify-center min-h-screen">
+      No patient data found.
+    </div>
+  );
 
   return (
-    <Layout className="bg-gray-100 min-h-screen flex items-center justify-center">
-      <div className="w-full min-h-full grid grid-cols-1 sm:grid-cols-[1.3fr_4fr]">
+    <Layout className="bg-gray-50 min-h-screen">
+      <div className="w-full min-h-screen grid grid-cols-1 lg:grid-cols-[300px_1fr]">
         <Side_bar />
         <Head>
-          <title>Patient Chat Interface</title>
+          <title>Patient Chat | {patient?.Firstname || "Patient"}</title>
           <meta name="description" content="Medical chat interface" />
         </Head>
-        <ChatUI
-          doctorId={doctorId}
-          patient={patient}
-          allMedicines={allMedicines}
-        />
+        <div className="p-4 md:p-8">
+          <ChatUI
+            doctorId={doctorId}
+            patient={patient}
+            allMedicines={allMedicines}
+          />
+        </div>
       </div>
     </Layout>
   );
@@ -94,7 +175,7 @@ function ChatUI({ patient, doctorId, allMedicines }) {
   const [message, setMessage] = useState("");
   const [medicineInput, setMedicineInput] = useState("");
   const [showInput, setShowInput] = useState(false);
-  const [selectedMedicines, setSelectedMedicines] = useState([]); // Array of objects {id, brandName}
+  const [selectedMedicines, setSelectedMedicines] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { id: patientId } = useParams();
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -149,7 +230,7 @@ function ChatUI({ patient, doctorId, allMedicines }) {
         body: JSON.stringify({
           doctor: doctorId,
           user: patientId,
-          medicines: selectedMedicines.map(m => m.id), // Send only the IDs
+          medicines: selectedMedicines.map(m => m.id),
         }),
       });
 
@@ -169,114 +250,149 @@ function ChatUI({ patient, doctorId, allMedicines }) {
   };
 
   return (
-    <div className="mx-auto bg-slate-200 my-[1cm] rounded-lg shadow-lg h-[80%] w-full max-w-md p-4">
-      <div className="flex items-center border-b pb-4 mb-4">
-        <div className="bg-gray-300 rounded-full h-10 w-10 flex items-center justify-center mr-3"></div>
-        <div>
-          <h2 className="font-medium text-gray-800">{patient.Firstname}</h2>
-          <p className="text-xs text-gray-500">{patient.Lastname}</p>
+    <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+      {/* Patient Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+        <div className="flex items-center space-x-4">
+          <div className="bg-white/20 rounded-full h-12 w-12 flex items-center justify-center">
+            {patient?.profilePicture ? (
+              <img 
+                src={patient.profilePicture} 
+                alt="Patient" 
+                className="rounded-full h-full w-full object-cover"
+              />
+            ) : (
+              <User className="h-6 w-6 text-white" />
+            )}
+          </div>
+          <div>
+            <h2 className="text-xl font-bold">
+              {patient?.Firstname} {patient?.Lastname}
+            </h2>
+            <div className="flex items-center space-x-4 text-sm text-blue-100">
+              <span className="flex items-center">
+                <Phone className="h-4 w-4 mr-1" />
+                {patient?.phone}
+              </span>
+              <span className="flex items-center">
+                <Mail className="h-4 w-4 mr-1" />
+                {patient?.email}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="border rounded-lg p-3 space-y-4">
-          {!showInput ? (
-            <textarea
-              value={message}
-              onChange={handleTextChange}
-              className="w-full h-24 resize-none outline-none p-2"
-              placeholder="Type message...\nType '/' to prescribe medicine"
-            ></textarea>
-          ) : (
+      {/* Chat Area */}
+      <div className="p-6 space-y-6">
+        {/* Medicine Selection Preview */}
+        {selectedMedicines.length > 0 && (
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+            <h3 className="text-sm font-medium text-blue-800 mb-3 flex items-center">
+              <ClipboardList className="h-4 w-4 mr-2" />
+              Prescription Summary
+            </h3>
             <div className="space-y-2">
-              <label className="block text-sm font-medium mb-1">
-                Search Medicine:
-              </label>
-              <input
-                type="text"
-                value={medicineInput}
-                onChange={(e) => setMedicineInput(e.target.value)}
-                className="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Start typing medicine name..."
-                autoFocus
-              />
-              {medicineInput && (
-                <div className="mt-1 max-h-60 overflow-y-auto border bg-white rounded shadow">
-                  {allMedicines
-                    .filter((m) =>
-                      m.brandName.toLowerCase().includes(medicineInput.toLowerCase())
-                    )
-                    .slice(0, 10) // Limit to 10 results
-                    .map((med) => (
-                      <div
-                        key={med.id}
-                        className="p-2 cursor-pointer hover:bg-blue-50 border-b"
-                        onClick={() => handleSelectMedicine(med.brandName)}
-                      >
-                        <div className="font-medium">{med.brandName}</div>
-                      </div>
-                    ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {selectedMedicines.length > 0 && (
-            <div className="bg-blue-50 border p-2 rounded">
-              <div className="text-sm font-medium mb-2">Selected Medicines:</div>
               {selectedMedicines.map((med) => (
-                <div key={med.id} className="flex justify-between items-center py-1 border-b">
-                  <span className="text-sm">{med.brandName}</span>
+                <div
+                  key={med.id}
+                  className="flex justify-between items-center bg-white p-3 rounded border border-blue-100"
+                >
+                  <span className="font-medium text-blue-900">
+                    {med.brandName}
+                  </span>
                   <button
                     type="button"
                     onClick={() => removeMedicine(med.id)}
-                    className="text-red-500 hover:text-red-700 text-xs px-2 py-1 rounded"
+                    className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-50"
                   >
-                    Remove
+                    <X className="h-4 w-4" />
                   </button>
                 </div>
               ))}
             </div>
-          )}
-        </div>
-
-        <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
-          <div className="text-xs">
-            <span className="mr-3">{patient.phone}</span>
-            <span>{patient.email}</span>
           </div>
-          <button
-            type="submit"
-            className={`px-4 py-2 rounded-lg flex items-center ${
-              isSubmitting || selectedMedicines.length === 0
-                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                : "bg-blue-100 text-blue-800 hover:bg-blue-200"
-            }`}
-            disabled={isSubmitting || selectedMedicines.length === 0}
-          >
-            {isSubmitting ? (
-              <>
-                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Sending...
-              </>
-            ) : (
-              <>
-                Send Prescription
-                <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </>
-            )}
-          </button>
-        </div>
-      </form>
+        )}
+
+        {/* Input Area */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {showInput ? (
+            <div className="space-y-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                <input
+                  type="text"
+                  value={medicineInput}
+                  onChange={(e) => setMedicineInput(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Search medicine..."
+                  autoFocus
+                />
+              </div>
+
+              {medicineInput && (
+                <div className="border rounded-lg overflow-hidden shadow-sm max-h-60 overflow-y-auto">
+                  {allMedicines
+                    .filter((m) =>
+                      m.brandName
+                        .toLowerCase()
+                        .includes(medicineInput.toLowerCase())
+                    )
+                    .slice(0, 10)
+                    .map((med) => (
+                      <button
+                        type="button"
+                        key={med.id}
+                        className="w-full text-left p-3 hover:bg-blue-50 border-b flex items-center"
+                        onClick={() => handleSelectMedicine(med.brandName)}
+                      >
+                        <Plus className="h-4 w-4 mr-2 text-blue-500" />
+                        <span className="font-medium">{med.brandName}</span>
+                      </button>
+                    ))}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="relative">
+              <textarea
+                value={message}
+                onChange={handleTextChange}
+                className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                rows={4}
+                placeholder={`Type your message to ${patient?.Firstname}...\nType "/" to prescribe medicine`}
+              />
+              <div className="absolute bottom-3 right-3 text-xs text-gray-500">
+                Press '/' for medicines
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={isSubmitting || selectedMedicines.length === 0}
+              className={`flex items-center px-6 py-3 rounded-lg shadow-sm transition-all ${
+                isSubmitting || selectedMedicines.length === 0
+                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  : "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-md"
+              }`}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="h-5 w-5 mr-2" />
+                  Send Prescription
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
