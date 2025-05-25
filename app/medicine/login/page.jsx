@@ -29,7 +29,7 @@ export default function Page() {
 
     try {
       // Replace with your actual API endpoint when available
-      const apiUrl = "http://192.168.103.88:3001/api/doctors/login"; // This will be replaced later
+      const apiUrl = "http://localhost:3001/api/doctors/login"; // This will be replaced later
       
       const response = await fetch(apiUrl, {
         method: "POST",

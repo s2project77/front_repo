@@ -29,7 +29,7 @@ export default function PrescriptionArchive() {
       setLoading(true);
       setError(null);
       const token = localStorage.getItem("token");
-      const response = await fetch("http://192.168.103.88:3001/api/doctors/myPrescriptions", {
+      const response = await fetch("http://localhost:3001/api/doctors/myPrescriptions", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -48,7 +48,7 @@ export default function PrescriptionArchive() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://192.168.103.88:3001/api/prescriptions/${prescriptionId}`,
+        `http://localhost:3001/api/prescriptions/${prescriptionId}`,
         {
           method: 'DELETE',
           headers: { Authorization: `Bearer ${token}` },
@@ -73,7 +73,7 @@ export default function PrescriptionArchive() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://192.168.103.88:3001/api/prescriptions/${editingPrescription._id}`,
+        `http://localhost:3001/api/prescriptions/${editingPrescription._id}`,
         {
           method: 'PATCH',
           headers: {

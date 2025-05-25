@@ -27,7 +27,7 @@ const PatientCard = ({ patient }) => {
 
   return (
     <div 
-      className="bg-white rounded-xl shadow-sm overflow-hidden transition-all duration-300 ease-in-out hover:shadow-md border border-gray-100 hover:border-blue-100"
+      className="bg-slate-200 rounded-xl shadow-sm overflow-hidden transition-all duration-300 ease-in-out hover:shadow-md border border-gray-100 hover:border-blue-100"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       role="article"

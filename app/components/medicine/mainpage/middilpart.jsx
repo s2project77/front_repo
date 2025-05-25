@@ -32,9 +32,9 @@ export const Middle_part = ({ themeColor = "blue", userData }) => {
           
           <div className="p-8">
             <div className="flex items-start space-x-6 mb-6">
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0">
+              <div className="relative w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
                 <Image
-                  src="/doctor_profile.jpg"
+                  src="/surgeon-doctor-svgrepo-com.svg"
                   width={96}
                   height={96}
                   alt="Doctor Profile"

@@ -12,7 +12,7 @@ export default async function MedicineDetailPage({ params }) {
   
   // Fetch all medicines
   
-    const medicineRes = await fetch("http://192.168.124.229:4000/api/medicines/getAllMedicines", {
+    const medicineRes = await fetch("http://localhost:3001/api/medicines/getAllMedicines", {
       cache: 'no-store' // Ensures fresh data on each request
     });
     
