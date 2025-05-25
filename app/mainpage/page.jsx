@@ -155,7 +155,7 @@ const Page1 = () => {
   }
 
   return (
-    <Layout userData={userData}>
+    <Layout>
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-emerald-50">
         {!isOnline && (
           <div className="fixed top-4 right-4 z-50 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2">

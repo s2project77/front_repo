@@ -66,7 +66,7 @@ useEffect(() => {
         }
         
         try {
-            const response = await fetch("http://localhost:80/api/medicines/getAllMedicines", {
+            const response = await fetch("http://localhost:3001/api/medicines/getAllMedicines", {
                 headers: { 
                     "Content-Type": "application/json",
                     'Authorization': `Bearer ${token}`
@@ -99,7 +99,7 @@ const postSingleMedicine = async (id) => {
     setIsAddingToStock(prev => ({ ...prev, [id]: true }));
     
     try {
-        const response = await fetch("http://localhost:80/api/pharmacies/medicineStock", {
+        const response = await fetch("http://localhost:3001/api/pharmacies/medicineStock", {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
@@ -120,44 +120,6 @@ const postSingleMedicine = async (id) => {
     }
 }
 
-const deleteMedicine = async (id) => {
-    const token = localStorage.getItem("token");
-    
-    if (!token) {
-        router.push("/login");
-        return;
-    }
-    
-    if (!window.confirm("Are you sure you want to delete this medicine?")) {
-        return;
-    }
-    
-    setIsDeletingMedicine(prev => ({ ...prev, [id]: true }));
-    
-    try {
-        const response = await fetch("http://localhost:80/api/pharmacies/medicineStock", {
-            method: "DELETE",
-            headers: { 
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${token}`
-            },
-           body: JSON.stringify({ medicineId: id }),
-        });
-       
-        if (!response.ok) {
-            throw new Error("Failed to delete medicine");
-        }
-        
-        // Update local state
-        
-        console.log("Medicine deleted successfully");
-    } catch (error) {
-        console.error("Error deleting medicine:", error);
-        alert("Failed to delete medicine. Please try again.");
-    } finally {
-        setIsDeletingMedicine(prev => ({ ...prev, [id]: false }));
-    }
-}
 
 return (
     <div>
@@ -192,16 +154,7 @@ return (
                                         </svg>
                                         {isAddingToStock[item._id] ? "Adding..." : "Add to Stock"}
                                     </button>
-                                    <button 
-                                        onClick={() => deleteMedicine(item._id)}
-                                        disabled={isDeletingMedicine[item._id]}
-                                        className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                        {isDeletingMedicine[item._id] ? "Deleting..." : "Remove from Stock"}
-                                    </button>
+                                   
                                 </div>
                             </TableCell>
                         </TableRow>

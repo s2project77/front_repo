@@ -12,12 +12,13 @@ import {
 
 export const TableStock = () => {
   const [fetchedData, setFetchedData] = useState([]);
+  const [isDeletingMedicine, setIsDeletingMedicine] = useState({});
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:80/api/pharmacies/medicineStock", {
+        const response = await fetch("http://localhost:3001/api/pharmacies/medicineStock", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,12 +39,51 @@ export const TableStock = () => {
     fetchData();
   }, []);
 
+  const deleteMedicine = async (id) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+
+    if (!window.confirm("Are you sure you want to delete this medicine?")) {
+      return;
+    }
+
+    setIsDeletingMedicine(prev => ({ ...prev, [id]: true }));
+
+    try {
+      const response = await fetch("http://localhost:3001/api/pharmacies/medicineStock", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ medicineId: id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete medicine");
+      }
+
+      // Remove from local state
+      setFetchedData(prev => prev.filter(item => item.medicine?._id !== id));
+      console.log("Medicine deleted successfully");
+    } catch (error) {
+      console.error("Error deleting medicine:", error);
+      alert("Failed to delete medicine. Please try again.");
+    } finally {
+      setIsDeletingMedicine(prev => ({ ...prev, [id]: false }));
+    }
+  }
+
   const table_data = [
     { id: 1, name: "Medicament ID" },
     { id: 2, name: "Generic Name" },
     { id: 3, name: "Brand Name" },
     { id: 4, name: "Form" },
-    { id: 5, name: "Available" }
+    { id: 5, name: "Action" }
   ];
 
   return (
@@ -65,14 +105,16 @@ export const TableStock = () => {
             <TableCell>{item.medicine?.genericName}</TableCell>
             <TableCell>{item.medicine?.brandName}</TableCell>
             <TableCell>{item.medicine?.form}</TableCell>
+          
+         
             <TableCell>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                item.Available 
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-red-100 text-red-800'
-              }`}>
-                {item.Available ? "Yes" : "No"}
-              </span>
+              <button
+                onClick={() => deleteMedicine(item.medicine?._id)}
+                disabled={isDeletingMedicine[item.medicine?._id]}
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
+              >
+                {isDeletingMedicine[item.medicine?._id] ? "Deleting..." : "Delete"}
+              </button>
             </TableCell>
           </TableRow>
         ))}

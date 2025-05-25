@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, User, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar_data = [
   { id: 1, name: "Home", link: "/" },
@@ -12,7 +12,7 @@ const Navbar_data = [
   { id: 4, name: "Help", link: "/pharmacy/#footer" },
 ];
 
-export default function Navbar({ userData }) {
+export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
@@ -69,29 +69,22 @@ export default function Navbar({ userData }) {
                   </div>
                   <div className="hidden sm:block text-left">
                     <div className="text-sm font-medium text-gray-900">
-                      {userData?.name || "Login"}
+                      pharmacy
                     </div>
-                    {userData?.email && (
-                      <div className="text-xs text-gray-500">{userData.email}</div>
-                    )}
                   </div>
-                  <ChevronDown size={16} className="text-gray-400" />
                 </button>
 
                 {/* Profile Dropdown */}
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2">
                     <Link
-                      href={userData ? "/profile" : "/login"}
+                      href={ "/profile" }
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                     >
-                      {userData ? "Profile" : "Login"}
+                     Profile
                     </Link>
-                    {userData && (
-                      <button className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                        Logout
-                      </button>
-                    )}
+                   
+                   
                   </div>
                 )}
               </div>
