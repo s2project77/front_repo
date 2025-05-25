@@ -29,6 +29,7 @@ export const Side_bar = ({ color = 'emerald' }) => {
   const router = useRouter();
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     router.push("/pharmacy");
   };
 
