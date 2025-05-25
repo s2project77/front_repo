@@ -68,14 +68,14 @@ export default function Profile({ color = "green", userData }) {
       let body = {};
 
       if (isDoctor) {
-        url = "http://localhost:80/api/doctors/updateinfo";
+        url = "http://localhost:3001/api/doctors/updateinfo";
         body = {
           Firstname: doctorData.Firstname,
           Lastname: doctorData.Lastname,
           email: doctorData.email,
         };
       } else {
-        url = "http://localhost:80/api/pharmacies/updateinfo";
+        url = "http://localhost:3001/api/pharmacies/updateinfo";
         body = {
           name: doctorData.name,
           email: doctorData.email,
@@ -115,8 +115,8 @@ export default function Profile({ color = "green", userData }) {
 
     try {
       const url = isDoctor
-        ? "http://localhost:80/api/doctors/deleteDoctor"
-        : "http://localhost:80/api/pharmacies/deletePharmacie";
+        ? "http://localhost:3001/api/doctors/deleteDoctor"
+        : "http://localhost:3001/api/pharmacies/deletePharmacie";
 
       const response = await fetch(url, {
         method: "DELETE",

@@ -15,7 +15,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:80/api/medicines/getAllMedicines");
+        const response = await fetch("http://localhost:3001/api/medicines/getAllMedicines");
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -104,9 +104,8 @@ const Page = () => {
           {visible.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl mx-auto">
-                {visible.map((item,_) => (
-                 <Link href={"./Documentation/"+item.id} > <div 
-                    key={item._id}
+                {visible.map((item,index) => (
+                 <Link key={index} href={"./Documentation/"+item.id} > <div 
                     className="bg-white h-60 flex flex-col justify-between p-4 shadow-md border-[2px] border-slate-300  rounded-lg transition-all duration-300 hover:shadow-2xl hover:border-blue-300"
                   > 
                     <div>

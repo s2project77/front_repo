@@ -22,7 +22,7 @@ const ProfilePage = () => {
         return;
       }
 
-      const res = await fetch("http://localhost:80/api/doctors/myinfo", {
+      const res = await fetch("http://localhost:3001/api/doctors/myinfo", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,

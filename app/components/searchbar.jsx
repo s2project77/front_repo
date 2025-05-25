@@ -39,7 +39,7 @@ export const Searchbar = ({ data }) => {
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup heading="Suggestions">
                 {data.map((item, index) => 
-                 <Link href={`./Documentation/${index}`} > <CommandItem   key={index}>{item.brandName}</CommandItem></Link>
+                 <Link href={`./Documentation/${index}`} key={index}> <CommandItem   >{item.brandName}</CommandItem></Link>
                 )}
               </CommandGroup>
               <CommandSeparator />

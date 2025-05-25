@@ -21,7 +21,7 @@ export const Right_part = () => {
           <div className="relative bg-white backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl shadow-blue-500/10 overflow-hidden">
             <div className="relative h-80">
               <Image
-                src="/doctor_office.jpg" // Changed to doctor-themed image
+                src="/DOCTOR.svg" // Changed to doctor-themed image
                 width={400}
                 height={320}
                 alt="Doctor's Office"

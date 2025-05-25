@@ -26,7 +26,7 @@ export default function LoginPage() {
     }
     
     try {
-      const response = await fetch("http://localhost:80/api/pharmacies/login", {
+      const response = await fetch("http://localhost:3001/api/pharmacies/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

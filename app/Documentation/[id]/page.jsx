@@ -9,26 +9,32 @@ import Link from 'next/link';
 // The component name doesn't matter, but it must be a valid React component
 export default async function MedicineDetailPage({ params }) {
   const { id } = params;
-     
-  // Fetch all medicines       
-  const medicineRes = await fetch("http://localhost:80/api/medicines/getAllMedicines", {
-    cache: 'no-store' // Ensures fresh data on each request
-  });
-                   
-  const allMedicines = await medicineRes.json();
-  const medicinesList = allMedicines.data.data;
-         
-  // Find the medicine with matching ID
-  const foundMedicine = medicinesList.find(medicine => 
-    medicine.id.toString() === id.toString()
-  );
-        
-  return(
-    <Layout>
-      <div className="w-full min-h-screen grid grid-cols-1 sm:grid-cols-[1.1fr_4fr] justify-center items-center">
-        <Side_bar></Side_bar>
- 
-        <div className="flex p-6 min-h-screen w-full relative flex-col gap-10 px-4 sm:px-20">
+  
+  // Fetch all medicines
+  
+    const medicineRes = await fetch("http://localhost:3001/api/medicines/getAllMedicines", {
+      cache: 'no-store' // Ensures fresh data on each request
+    });
+    
+    
+    
+    const allMedicines = await medicineRes.json();
+    const medicinesList = allMedicines.data.data;
+    
+    // Find the medicine with matching ID
+    const foundMedicine = medicinesList.find(medicine => 
+      medicine.id.toString() === id.toString()
+    );
+    
+  
+return(
+
+<Layout>
+  
+<div className="w-full min-h-screen   grid grid-cols-1 sm:grid-cols-[1.1fr_4fr] justify-center items-center">
+<Side_bar></Side_bar>
+
+<div className="flex p-6 min-h-screen   w-full relative flex-col gap-10 px-4 sm:px-20">
           <div className='p-4'>
             <h1 className="text-2xl font-bold">
               {foundMedicine.brandName} Medicament

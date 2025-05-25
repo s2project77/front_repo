@@ -22,11 +22,12 @@ export const Right_part = () => {
           <div className="relative bg-white backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl shadow-emerald-500/10 overflow-hidden">
             <div className="relative h-80">
               <Image
-                src="/pharmacie_imag.jpg"
+                src="/zzino-logo.svg"
                 width={400}
                 height={320}
                 alt="Pharmacy"
                 className="w-full h-full object-cover"
+                content="cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
               <div className="absolute bottom-6 left-6 text-white">

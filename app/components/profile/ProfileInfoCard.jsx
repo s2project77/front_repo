@@ -54,7 +54,7 @@ export default function ProfileInfoCard({ userData, color }) {
           <div className="relative group">
             <div className={`absolute inset-0 bg-gradient-to-r ${currentColor.accent} rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity`}></div>
             <Image
-              src={userData.image || "/profile2.svg"}
+              src={"/surgeon-doctor-svgrepo-com.svg"}
               alt="Profile"
               width={160}
               height={160}

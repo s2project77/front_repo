@@ -22,12 +22,9 @@ const side_bar_data = [
   { id: 2, name: "Medications", link: "/Documentation", icon: Database },
   { id: 3, name: "myStock", link: "/myStock", icon: Archive },
   { id: 4, name: "Profile", link: "/profile", icon: User },
-  { id: 5, name: "Settings", link: "/settings", icon: Settings },
 ];
 
 export const Side_bar = ({ color = 'emerald' }) => {
-  const [showLocation, setShowLocation] = useState(true);
-  const [showUploader, setShowUploader] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -72,50 +69,19 @@ export const Side_bar = ({ color = 'emerald' }) => {
         })}
       </div>
 
-      {/* Location Section */}
-      <div className="px-4 py-4 border-t border-gray-100">
-        <button
-          onClick={() => setShowLocation(!showLocation)}
-          className="flex items-center justify-between w-full p-3 rounded-xl hover:bg-gray-50 transition-colors"
-        >
-          <div className="flex items-center space-x-3">
-            <MapPin size={20} className="text-emerald-500" />
-            <span className="font-medium text-gray-700">Location</span>
-          </div>
-          {showLocation ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-        </button>
-        
-        {showLocation && (
-          <div className="mt-3 rounded-xl overflow-hidden">
-            <Image
-              src="/map.jpg"
-              width={200}
-              height={120}
-              alt="Location"
-              className="w-full h-24 object-cover"
-            />
-          </div>
-        )}
-      </div>
-
       {/* Add Medication Section */}
       <div className="px-4 py-4 border-t border-gray-100">
-        <button
-          onClick={() => setShowUploader(!showUploader)}
+        <Link
+          href="/addmedicament"
+          
           className="flex items-center justify-between w-full p-3 rounded-xl hover:bg-emerald-50 transition-colors text-emerald-600"
         >
           <div className="flex items-center space-x-3">
             <PlusCircle size={20} />
             <span className="font-medium">Quick Add</span>
           </div>
-          {showUploader ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-        </button>
-        
-        {showUploader && (
-          <div className="mt-3 p-4 bg-gray-50 rounded-xl">
-            <ImageUploader />
-          </div>
-        )}
+        </Link>
+      
       </div>
 
       {/* Logout */}
