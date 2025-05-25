@@ -21,10 +21,10 @@ export default function MedicalChatPage() {
         if (!token || !patientId) return;
 
         const [doctorRes, patientRes] = await Promise.all([
-          fetch("http://192.168.103.88:3001/api/doctors/myinfo", {
+          fetch("http://localhost:80/api/doctors/myinfo", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          fetch(`http://192.168.103.88:3001/api/users/${patientId}`, {
+          fetch(`http://localhost:80/api/users/${patientId}`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);

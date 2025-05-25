@@ -40,7 +40,7 @@ const Page1 = () => {
     }
 
     try {
-      const response = await fetch('http://192.168.103.88:3001/api/doctors/myinfo', {
+      const response = await fetch('http://localhost:80/api/doctors/myinfo', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

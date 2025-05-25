@@ -18,7 +18,7 @@ const PatientCardsGrid = () => {
         // Get token from localStorage
         const token = localStorage.getItem("token");
         
-        const response = await fetch("http://192.168.103.88:3001/api/users", {
+        const response = await fetch("http://localhost:80/api/users", {
           headers: {
             'Authorization': `Bearer ${token}`
           }

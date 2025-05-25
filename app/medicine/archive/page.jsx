@@ -29,7 +29,7 @@ export default function PrescriptionArchive() {
       setLoading(true);
       setError(null);
       const token = localStorage.getItem("token");
-      const response = await fetch("http://192.168.103.88:3001/api/doctors/myPrescriptions", {
+      const response = await fetch("http://localhost:80/api/doctors/myPrescriptions", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
