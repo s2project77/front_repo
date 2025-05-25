@@ -1,83 +1,164 @@
-import React from 'react';
-import { Side_bar } from '@/app/components/medicine/mainpage/sidebar';
+"use client";
+import React, { useState, useEffect } from 'react';
 import Layout from '@/app/components/medcine_layout/layout';
+import  Side_bar from '@/app/components/medicine/mainpage/sidebar';
 import Searchbar from '@/app/components/searchbar';
-import Image from 'next/image';;
 import Link from 'next/link';
 
-// In Next.js App Router, page files should export a React component as default
-// The component name doesn't matter, but it must be a valid React component
-export default async function MedicineDetailPage({ params }) {
-  const { id } = params;
-  
-    const medicineRes = await fetch("http://localhost:3001/api/medicines/getAllMedicines", {
-      cache: 'no-store' // Ensures fresh data on each request
-    });
-    
-    
-    
-    const allMedicines = await medicineRes.json();
-    const medicinesList = allMedicines.data.data;
-    
-    // Find the medicine with matching ID
-    const foundMedicine = medicinesList.find(medicine => 
-      medicine.id.toString() === id.toString()
-    );
-    
-  
-return(
+const Page = () => {
+  const [fetchedData, setFetchedData] = useState([]);
+  const [visible, setVisible] = useState([]);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-<Layout>
-  
-<div className="w-full min-h-screen   grid grid-cols-1 sm:grid-cols-[1.1fr_4fr] justify-center items-center">
-<Side_bar></Side_bar>
-
-<div className="flex p-6 min-h-screen   w-full relative flex-col gap-10 px-4 sm:px-20">
-          <div className='p-4'>
-            <h1 className="text-2xl font-bold"> {foundMedicine.brandName}  Medicament
-            </h1>
-          </div>
-
- 
-          <div className=" rounded-lg shadow-lg border bg-gray-100 border-gray-200 p-6">
-        <div className="flex items-center mb-6">
-        <div className="mr-4">
-        <Image  height={100} width={100}
-              src={"/doliprane.jpg"} 
-              alt={foundMedicine.brandName}
-              className="w-24 h-24 object-contain rounded-lg"
-            />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-800">{foundMedicine.brandName}</h2>
-           <Link  href={"./"+id+"/"+foundMedicine.genericName} > <p className="text-gray-600">{foundMedicine.genericName}</p></Link>
-          </div>
-        </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:80/api/medicines/getAllMedicines");
         
-        <div className="border-t-4 border-t-slate-500 border-gray-200 pt-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
-            <span className="font-medium text-gray-700">Form:</span>
-            <span className="col-span-2 text-gray-600">{foundMedicine.form}</span>
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.status !== "success" || !result.data?.data) {
+          throw new Error("Invalid data format received from API");
+        }
+        
+        setFetchedData(result.data.data);
+        setVisible(result.data.data.slice(0, 9));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const nextPage = () => {
+    const nextPageNum = page + 1;
+    const start = nextPageNum * 9;
+    const end = start + 9;
+    
+    if (start >= fetchedData.length) return; 
+    setPage(nextPageNum);
+    setVisible(fetchedData.slice(start, end));
+  };
+
+  const prevPage = () => {
+    if (page === 0) return;
+    const prevPageNum = page - 1;
+    const start = prevPageNum * 9;
+    const end = start + 9;
+    setPage(prevPageNum);
+    setVisible(fetchedData.slice(start, end));
+  };
+
+  const handleButtonClick = (item, event) => {
+    event.preventDefault(); // Prevent Link navigation
+    event.stopPropagation(); // Stop event bubbling
+    console.log('Button clicked for medicine:', item.brandName);
+    // Add your button action here
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="w-full min-h-screen  justify-center   grid grid-cols-1 sm:grid-cols-[1.1fr_4fr] items-center">
+          <Side_bar/>
+          <div className="text-xl flex items-center justify-center ">Loading medicines...</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="w-full min-h-screen  justify-center items-center  grid grid-cols-1 sm:grid-cols-[1.1fr_4fr]">
+          <Side_bar/>
+          <div className="text-xl text-red-500">Error: {error}</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout>
+      <div className="w-full min-h-full grid grid-cols-1 sm:grid-cols-[1.1fr_4fr]">
+        <Side_bar />
+       
+        <div className="flex p-6 min-h-screen w-full relative flex-col gap-10 px-4 sm:px-20">
+          <div>
+            <h1 className="text-2xl font-bold">Medicaments Documentation</h1>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
-            <span className="font-medium text-gray-700">Measurement Unit:</span>
-            <span className="col-span-2 text-gray-600">{foundMedicine.measurementUnit}</span>
+          
+          <div className="flex z-50 items-center justify-center">
+            <Searchbar data={fetchedData} />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
-            <span className="font-medium text-gray-700">ID:</span>
-            <span className="col-span-2 text-gray-600">{foundMedicine.id}</span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <span className="font-medium text-gray-700">Description:</span>
-            <span className="col-span-2 text-gray-600">{foundMedicine.description}</span>
-          </div>
+          
+          {visible.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl mx-auto">
+                {visible.map((item, _) => (
+                  <Link href={"./Documentation/"+item.id} key={item._id}>
+                    <div className="bg-white h-60 flex flex-col justify-between p-4 shadow-md border-[2px] border-slate-300 rounded-lg transition-all duration-300 hover:shadow-2xl hover:border-blue-300 relative">
+                      {/* Button positioned in top-right corner */}
+                      <button 
+                        className="absolute top-3 right-3 bg-blue-500 hover:bg-blue-600 text-white font-medium py-1 px-3 rounded text-sm transition-colors duration-200 flex items-center gap-1"
+                        onClick={(e) => handleButtonClick(item, e)}
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Add
+                      </button>
+                      
+                      <div>
+                        <p className="text-lg font-bold text-gray-800 pr-16">{item.brandName}</p>
+                        <p className="text-sm text-gray-600 font-medium">{item.genericName}</p>
+                        <p className="text-xs text-gray-500 mt-1">Form: {item.form}</p>
+                      </div>
+                      <p className="text-sm text-gray-600 mt-2 line-clamp-3">{item.description}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="flex justify-center gap-4 mt-4">
+                {page > 0 && (
+                  <button 
+                    onClick={prevPage} 
+                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+                  >
+                    Previous
+                  </button>
+                )}
+                {fetchedData.length > (page + 1) * 9 && (
+                  <button 
+                    onClick={nextPage} 
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-10">
+              <p className="text-gray-500">No medicines found</p>
+            </div>
+          )}
         </div>
       </div>
-</div>
+    </Layout>
+  );
+};
 
-</div>
-
-</Layout>
-)
-
-}
+export default Page;

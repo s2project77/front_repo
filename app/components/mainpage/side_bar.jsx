@@ -20,7 +20,7 @@ import ImageUploader from './input_file';
 const side_bar_data = [
   { id: 1, name: "Dashboard", link: "/mainpage", icon: Home },
   { id: 2, name: "Medications", link: "/Documentation", icon: Database },
-  { id: 3, name: "Archive", link: "/archive", icon: Archive },
+  { id: 3, name: "myStock", link: "/myStock", icon: Archive },
   { id: 4, name: "Profile", link: "/profile", icon: User },
   { id: 5, name: "Settings", link: "/settings", icon: Settings },
 ];
