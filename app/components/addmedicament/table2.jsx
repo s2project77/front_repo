@@ -105,7 +105,10 @@ const postSingleMedicine = async (id) => {
                 "Content-Type": "application/json",
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ medicineId: id }),
+            body: JSON.stringify({ medicineId: id 
+
+               
+            }),
         });
        
         if (!response.ok) {

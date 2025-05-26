@@ -2,27 +2,11 @@
 import React from "react";
 import Image from "next/image";
 import { Search, MapPin, Phone, Mail, FileText, Plus, Stethoscope, ClipboardList } from "lucide-react";
-
+import Link from "next/link";
 export const Middle_part = ({ themeColor = "blue", userData }) => {
   return (
     <div className="min-h-screen p-6 space-y-6 bg-gradient-to-br from-gray-50 via-white to-gray-50">
-      {/* Modern Search Box */}
-      <div className="relative group">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
-        <div className="relative bg-white backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl shadow-blue-500/10 p-1">
-          <div className="flex items-center space-x-4 px-4 py-3">
-            <Search className="text-blue-500 flex-shrink-0" size={20} />
-            <input
-              type="text"
-              className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-400 text-lg"
-              placeholder="Search for patients or conditions..."
-            />
-            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-2 rounded-xl font-medium hover:shadow-lg transition-all duration-300 cursor-pointer">
-              Search
-            </div>
-          </div>
-        </div>
-      </div>
+    
 
       {/* Enhanced Doctor Info Card */}
       <div className="relative group">
@@ -106,14 +90,14 @@ export const Middle_part = ({ themeColor = "blue", userData }) => {
       </div>
 
       {/* Enhanced CTA Button */}
-      <div className="relative group">
+        <div className="relative group">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
-        <button className="relative w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold py-4 px-8 rounded-2xl shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-[1.02] transform">
+       <Link href={"./patient"} >  <button className="relative w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold py-4 px-8 rounded-2xl shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-[1.02] transform">
           <div className="flex items-center justify-center space-x-3">
             <Plus size={20} />
-            <span className="text-lg">Add Patient Record</span>
+         <span className="text-lg">Add Patient Record</span>
           </div>
-        </button>
+        </button></Link>
       </div>
     </div>
   );
